@@ -1,15 +1,22 @@
 // Polvere di stelle sullo sfondo: deriva lenta, scintillio, le stelle si scostano dal mouse e vicino al puntatore
 // si accendono e si collegano; un clic manda un'onda leggera. Dietro le colonne di testo le stelle si attenuano.
+// Cambiando pagina il cielo (stelle, onde, puntatore) passa alla pagina nuova attraverso la sessionStorage della scheda:
+// continua da dove era invece di ripartire da capo.
 // Si ferma solo con l'interruttore «Animazioni ridotte» del sito (classe meno-moto su <html>).
+// Lo script sta subito dopo il canvas, non in fondo: le stelle ci sono già nel primo fotogramma anche nelle pagine lunghe.
 (() => {
+  const html = document.documentElement;
+  // arrivo da un'altra pagina con la dissolvenza (view transition): html.arrivo dice a CSS e sito.js di saltare le entrate
+  window.addEventListener('pagereveal', e => { if (e.viewTransition) html.classList.add('arrivo'); });
   const tela = document.getElementById('stelle');
   if (!tela) return;
   const ctx = tela.getContext('2d', { alpha: false });
-  const fermo = () => document.documentElement.classList.contains('meno-moto');
+  const fermo = () => html.classList.contains('meno-moto');
+  const STATO = 'sfondo:stelle';                       // chiave dello stato passato da una pagina all'altra
 
-  let L = 0, A = 0, dpr = 1, stelle = [], onde = [], fasce = [];
-  let px = -1e4, py = -1e4, tx = -1e4, ty = -1e4, dentro = false, vicinanza = 0;
-  let ultimoScroll = window.scrollY, prima = performance.now(), anim = 0;
+  let L = 0, A = 0, dpr = 1, stelle = [], onde = [], fasce = [], fasceVere = false, conta = 0;
+  let px = -1e4, py = -1e4, tx = -1e4, ty = -1e4, dentro = false, vicinanza = 0, tipo = '';
+  let ultimoScroll = window.scrollY, prima = performance.now(), anim = 0, salvatoAlle = 0, tornata = false;
 
   function nuova() {
     const z = Math.pow(Math.random(), 1.8);            // profondità: tante lontane, poche vicine
@@ -23,18 +30,21 @@
     };
   }
 
-  // colonne di testo (appunti, regole): lì le stelle restano più tenui per non disturbare la lettura
+  // colonne di testo (appunti, regole): lì le stelle restano più tenui per non disturbare la lettura.
+  // Finché la pagina si carica e le colonne non ci sono ancora valgono quelle della pagina precedente (fasceVere = false).
   function misuraFasce() {
-    fasce = Array.from(document.querySelectorAll('.testo')).map(e => { const r = e.getBoundingClientRect(); return [r.left - 28, r.right + 28]; }).filter(([a, b]) => b - a > 200);
+    const trovate = Array.from(document.querySelectorAll('.testo')).map(e => { const r = e.getBoundingClientRect(); return [r.left - 28, r.right + 28]; }).filter(([a, b]) => b - a > 200);
+    if (trovate.length || document.readyState !== 'loading') { fasce = trovate; fasceVere = true; }
   }
   const attenua = x => { for (const [a, b] of fasce) if (x > a && x < b) return 0.32; return 1; };
+  const quante = () => Math.round(Math.min(600, Math.max(170, (L * A) / 4200)));
 
   function dimensiona() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     L = window.innerWidth; A = window.innerHeight;
     tela.width = Math.round(L * dpr); tela.height = Math.round(A * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const n = Math.round(Math.min(600, Math.max(170, (L * A) / 4200)));
+    const n = quante();
     if (stelle.length > n) stelle.length = n;
     while (stelle.length < n) stelle.push(nuova());
     for (const s of stelle) { if (s.x > L) s.x = Math.random() * L; if (s.y > A) s.y = Math.random() * A; }
@@ -43,6 +53,29 @@
   }
   // animazioni ridotte: solo lo sfondo nero, senza stelle
   function vuoto() { ctx.globalAlpha = 1; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, L, A); }
+
+  // Alone del puntatore, disegnato una volta sola in un'immagine con un leggero rumore (dithering). Il profilo è quello
+  // di sempre (0.07 al centro, in linea retta fino a zero a 240 px) fino a 170 px, poi si spegne del tutto entro 200 px.
+  // La coda tagliata sta sotto il 2% di luminosità: su un OLED con le impostazioni normali si confonde col nero, ma sugli
+  // schermi che schiariscono i neri (luminosità o gamma alzate nel driver della scheda video, molti LCD) diventava visibile
+  // e l'alone sembrava più grande e fatto ad anelli. Così resta dappertutto come su un OLED.
+  const ALONE = 200;
+  let aloneImg = null;
+  function preparaAlone(colore) {
+    const lato = ALONE * 2, c = document.createElement('canvas');
+    c.width = c.height = lato;
+    const g = c.getContext('2d'), img = g.createImageData(lato, lato), d = img.data, [r0, g0, b0] = colore.split(',').map(Number);
+    for (let y = 0; y < lato; y++) for (let x = 0; x < lato; x++) {
+      const r = Math.hypot(x + 0.5 - ALONE, y + 0.5 - ALONE);
+      if (r >= ALONE) continue;
+      const t = Math.max(0, (r - 170) / 30), a = 0.07 * (1 - r / 240) * (1 - t * t * (3 - 2 * t));
+      const i = (y * lato + x) * 4;
+      d[i] = r0; d[i + 1] = g0; d[i + 2] = b0;
+      d[i + 3] = Math.max(0, Math.round(a * 255 + (Math.random() - 0.5) * 2));   // ±1 livello a caso: niente anelli
+    }
+    g.putImageData(img, 0, 0);
+    return c;
+  }
 
   function disegna(dt, dScroll) {
     ctx.globalAlpha = 1;
@@ -53,11 +86,10 @@
     vicinanza += ((dentro ? 1 : 0) - vicinanza) * 0.06;
 
     if (vicinanza > 0.01) {                               // leggero alone rosso attorno al puntatore
-      const g = ctx.createRadialGradient(px, py, 0, px, py, 240);
-      g.addColorStop(0, `rgba(215,38,63,${0.07 * vicinanza})`);
-      g.addColorStop(1, 'rgba(215,38,63,0)');
-      ctx.fillStyle = g;
-      ctx.fillRect(px - 240, py - 240, 480, 480);
+      if (!aloneImg) aloneImg = preparaAlone('215, 38, 63');
+      ctx.globalAlpha = vicinanza;
+      ctx.drawImage(aloneImg, px - ALONE, py - ALONE, ALONE * 2, ALONE * 2);
+      ctx.globalAlpha = 1;
     }
 
     const R = 150, R2 = R * R, vicine = [];
@@ -123,22 +155,93 @@
 
   function ciclo(ora) {
     if (fermo()) { vuoto(); anim = 0; return; }   // animazioni ridotte scelte mentre la pagina si caricava
-    const dt = Math.min(48, ora - prima); prima = ora;
+    if (!fasceVere && ++conta % 8 === 0) misuraFasce();
+    const dt = Math.max(0, Math.min(48, ora - prima)); prima = ora;
     const sy = window.scrollY, dScroll = sy - ultimoScroll; ultimoScroll = sy;
     disegna(dt, Math.max(-60, Math.min(60, dScroll)));
     anim = requestAnimationFrame(ciclo);
   }
-  function avvia() { cancelAnimationFrame(anim); if (fermo()) { vuoto(); return; } if (document.hidden) { disegna(0, 0); return; } prima = performance.now(); anim = requestAnimationFrame(ciclo); }
+  function avvia() {
+    cancelAnimationFrame(anim);
+    if (fermo()) { vuoto(); return; }
+    disegna(0, 0);                                   // subito lo stato attuale, senza aspettare il primo fotogramma
+    if (document.hidden) return;
+    prima = performance.now(); anim = requestAnimationFrame(ciclo);
+  }
 
-  window.addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; if (!dentro) { px = tx; py = ty; } dentro = true; }, { passive: true });
+  /* ---------- passaggio da una pagina all'altra ---------- */
+  // Lo stato lo scrive solo questo script, ma la sessionStorage è di tutta l'origine: ogni valore letto è controllato
+  // (numeri finiti, dentro limiti ragionevoli) e le liste hanno un tetto; se qualcosa non torna si riparte da capo.
+  const num = (v, a, b) => typeof v === 'number' && Number.isFinite(v) && v >= a && v <= b;
+  const tondo = (v, k) => Math.round(v * k) / k;
+  function salvaStato() {
+    if (fermo() || !L) return;
+    const stato = {
+      v: 1, t: Date.now(), L, A,
+      p: dentro && tipo !== 'touch' ? [tondo(px, 10), tondo(py, 10), tondo(vicinanza, 1e3)] : null,
+      f: fasce.slice(0, 6).map(([a, b]) => [tondo(a, 10), tondo(b, 10)]),
+      s: stelle.flatMap(s => [tondo(s.x, 10), tondo(s.y, 10), tondo(s.z, 1e4), tondo(s.r, 1e3), tondo(s.a, 1e3), tondo(s.fase % (Math.PI * 2), 1e3),
+        tondo(s.vel, 1e3), tondo(s.vx, 1e5), tondo(s.vy, 1e5), tondo(s.ox, 100), tondo(s.oy, 100), tondo(s.ux, 1e3), tondo(s.uy, 1e3)]),
+      o: onde.map(o => [tondo(o.x, 10), tondo(o.y, 10), tondo(o.r, 10), tondo(o.forza, 1e4)]),
+    };
+    salvatoAlle = stato.t;
+    try { sessionStorage.setItem(STATO, JSON.stringify(stato)); } catch { /* memoria della scheda non disponibile */ }
+  }
+  function riprendi(dopo = 0) {   // dopo: si accetta solo uno stato più recente di questo istante
+    let s = null;
+    try { s = JSON.parse(sessionStorage.getItem(STATO)); } catch { return false; }
+    const eta = s ? Date.now() - s.t : NaN;
+    if (!s || s.v !== 1 || !num(s.t, dopo + 1, 1e14) || !num(eta, 0, 5000) || !num(s.L, 1, 1e5) || !num(s.A, 1, 1e5) || !Array.isArray(s.s) || !s.s.length
+      || s.s.length % 13 || s.s.length > 13 * 600 || !Array.isArray(s.o) || s.o.length > 3) return false;
+    const kx = L / s.L, ky = A / s.A, cielo = [], nuoveOnde = [];
+    for (let i = 0; i < s.s.length; i += 13) {
+      const [x, y, z, r, a, fase, vel, vx, vy, ox, oy, ux, uy] = s.s.slice(i, i + 13);
+      if (!num(x, -20, s.L + 20) || !num(y, -20, s.A + 20) || !num(z, 0, 1) || !num(r, 0, 3) || !num(a, 0, 1) || !num(fase, -7, 7) || !num(vel, 0, 3)
+        || !num(vx, -0.05, 0.05) || !num(vy, -0.05, 0.05) || !num(ox, -300, 300) || !num(oy, -300, 300) || !num(ux, -100, 100) || !num(uy, -100, 100)) return false;
+      cielo.push({ x: x * kx, y: y * ky, z, r, a, fase, vel, vx, vy, ox, oy, ux, uy });
+    }
+    for (const o of s.o) {
+      if (!Array.isArray(o) || o.length !== 4 || !num(o[0], -50, s.L + 50) || !num(o[1], -50, s.A + 50) || !num(o[2], 0, 1e5) || !num(o[3], 0, 1)) return false;
+      nuoveOnde.push({ x: o[0] * kx, y: o[1] * ky, r: o[2], forza: o[3] });
+    }
+    const n = quante();
+    if (cielo.length > n) cielo.length = n;
+    while (cielo.length < n) cielo.push(nuova());
+    stelle = cielo; onde = nuoveOnde;
+    if (Array.isArray(s.p) && s.p.length === 3 && num(s.p[0], -50, s.L + 50) && num(s.p[1], -50, s.A + 50) && num(s.p[2], 0, 1)) {
+      px = tx = s.p[0] * kx; py = ty = s.p[1] * ky; vicinanza = s.p[2]; dentro = true; tipo = 'mouse';
+    }
+    if (!fasceVere && Array.isArray(s.f) && s.f.length <= 6 && s.f.every(q => Array.isArray(q) && q.length === 2 && num(q[0], -1e4, 1e5) && num(q[1], -1e4, 1e5))) {
+      fasce = s.f.map(([a, b]) => [a * kx, b * kx]);
+    }
+    // avanti di quanto è durato il cambio di pagina (al massimo un secondo): la deriva continua senza salti
+    const el = Math.min(1000, eta);
+    for (const q of stelle) {
+      q.x += q.vx * el; q.y += q.vy * el; q.fase += q.vel * el * 0.001;
+      if (q.x < -10) q.x += L + 20; else if (q.x > L + 10) q.x -= L + 20;
+      if (q.y < -10) q.y += A + 20; else if (q.y > A + 10) q.y -= A + 20;
+    }
+    for (const o of onde) { o.r += el * 0.5; o.forza *= Math.pow(0.9955, el); }
+    return true;
+  }
+
+  window.addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; tipo = e.pointerType; if (!dentro) { px = tx; py = ty; } dentro = true; }, { passive: true });
   window.addEventListener('pointerdown', e => { if (!fermo()) onde.push({ x: e.clientX, y: e.clientY, r: 0, forza: 1 }); if (onde.length > 3) onde.shift(); }, { passive: true });
   document.addEventListener('pointerleave', () => { dentro = false; });
   window.addEventListener('blur', () => { dentro = false; });
   let timer = 0;
   window.addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(dimensiona, 120); });
+  document.addEventListener('DOMContentLoaded', misuraFasce);
   window.addEventListener('load', misuraFasce);
   document.addEventListener('visibilitychange', avvia);
   document.addEventListener('ofa:moto', avvia);
+  window.addEventListener('pagehide', salvaStato);
+  // con Indietro/Avanti la pagina torna dalla cache del browser: lo stato della pagina appena lasciata diventa leggibile
+  // solo al primo fotogramma, quindi si riprende a «pagereveal» (se il browser non lo conosce, subito)
+  window.addEventListener('pageshow', e => { if (!e.persisted) return; if ('onpagereveal' in window) tornata = true; else if (riprendi(salvatoAlle)) avvia(); });
+  // un link con àncora fa scorrere la pagina nuova mentre si apre: quello scorrimento non deve spostare le stelle
+  window.addEventListener('pagereveal', () => { ultimoScroll = window.scrollY; if (tornata) { tornata = false; if (riprendi(salvatoAlle)) avvia(); } });
   dimensiona();
+  riprendi();
   avvia();
 })();

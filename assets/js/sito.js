@@ -60,11 +60,17 @@
   suScroll();
 
   /* ---------- apparizioni ---------- */
+  // arrivando da un'altra pagina con la dissolvenza (view transition) ciò che è già sullo schermo resta visibile da subito:
+  // niente entrata del titolo (html.arrivo) né comparsa graduale
   const rivela = $$('.rivela');
+  const arrivo = () => { html.classList.add('arrivo'); rivela.forEach(e => { const r = e.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) e.classList.add('visto'); }); };
+  try { if (html.classList.contains('arrivo') || html.matches(':active-view-transition')) arrivo(); } catch { /* selettore non supportato: niente dissolvenza */ }
+  window.addEventListener('pagereveal', e => { if (e.viewTransition) arrivo(); });
   if ('IntersectionObserver' in window && !html.classList.contains('meno-moto')) {
     const io = new IntersectionObserver(voci => voci.forEach(v => { if (v.isIntersecting) { v.target.classList.add('visto'); io.unobserve(v.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     rivela.forEach(e => io.observe(e));
   } else rivela.forEach(e => e.classList.add('visto'));
+  html.classList.add('pronto');   // da qui la comparsa la gestisce questo script (in CSS: html.arrivo:not(.pronto))
 
   /* ---------- indice che segue la lettura (chiuso all'inizio sugli schermi stretti) ---------- */
   const indiceBox = $('.indice > details');

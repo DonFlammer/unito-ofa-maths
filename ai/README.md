@@ -4,7 +4,7 @@
 
 This folder collects in Markdown everything an AI needs to help you make up the **maths OFA** (additional learning requirement, *obbligo formativo aggiuntivo*) of the Computer Science degree programme (corso di laurea in Informatica) at the University of Turin **without redoing the research from scratch**: the official rules with sources, the dates, what the test is like, how the course on the OFA platform is organised (with the typos in its material already verified), the complete notes for the eight modules, an entry test, eight mock tests and a study plan. The pages of the site are generated from these same files, so the content is identical.
 
-> **⚠️ Disclaimer.** Research and texts are based on public sources of the degree programme and of UniTo and on the material of the “OFA Matematica” course, consulted on the platform with a student's login. Every mathematical result was recomputed a second time, independently, with symbolic computation. They are accurate and sourced, but may contain errors or outdated data. **The author takes no responsibility**; anyone who uses them does so at their own risk and must check important information (rules, dates, registration) against the official sources. Full text: [../DISCLAIMER.md](../DISCLAIMER.md).
+> **⚠️ Disclaimer.** Research and texts are based on public sources of the degree programme and of UniTo and on the material of the “OFA Matematica” course, consulted on the platform with a student's login. Every mathematical result was recomputed a second time, independently, with symbolic computation. They are accurate and sourced, but may contain errors or outdated data. **I, DonFlammer, publish this guide and take no responsibility**; anyone who uses them does so at their own risk and must check important information (rules, dates, registration) against the official sources. Full text: [../DISCLAIMER.md](../DISCLAIMER.md).
 
 ## Quick use
 
@@ -44,6 +44,6 @@ My request: <write your question here>
 Italian original of this folder (this English version is a translation; if the two differ, the Italian version prevails): [ai/](https://github.com/DonFlammer/unito-ofa-matematica/tree/main/ai) in DonFlammer/unito-ofa-matematica.
 The site with the same content, interactive quizzes, timed mock tests and a study plan calculated on your dates: https://donflammer.github.io/unito-ofa-maths/
 Notes for the first year of Computer Science at UniTo, with their own context for AIs: [DonFlammer/unito-computer-science](https://github.com/DonFlammer/unito-computer-science).
-Author: DonFlammer · Telegram @rapsodico (https://t.me/rapsodico), with no commitment to answer. Licence CC BY-NC-SA 4.0.
+I'm DonFlammer · Telegram @rapsodico (https://t.me/rapsodico), with no commitment to answer. Licence CC BY-NC-SA 4.0.
 
 Last update: 30/09/2026 (first complete version: rules verified on 29/09/2026, notes for the eight modules, entry test, mock tests, study plan, official course and verified typos).

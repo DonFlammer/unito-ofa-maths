@@ -29,7 +29,7 @@ Sources: degree programme regulations (Regolamento didattico) for the 2026 cohor
 > 1. **Check your online transcript** on [MyUnito](https://my.unito.it): if “INT1475 OFA - MATEMATICA” is there, you have the OFA.
 > 2. **Log in to [www.ofa.unito.it](https://www.ofa.unito.it)** with your UniTo SCU credentials (the same as for MyUnito). You must already be enrolled and have active student status.
 > 3. **Enrol in the “OFA Matematica” course**: from the menu Corsi → Attività OFA (Courses → OFA activities), or [directly here](https://www.ofa.unito.it/course/view.php?id=20). Enrolment does not ask for a key.
-> 4. **Study all the material** of the 8 modules: the exam questions are based on everything there is on the platform. The notes on this site follow the same modules; how the course is organised, and which typos we found in its material, is explained on the page [The official course](sito:course.html).
+> 4. **Study all the material** of the 8 modules: the exam questions are based on everything there is on the platform. The notes on this site follow the same modules; how the course is organised, and which typos were found in its material, is explained on the page [The official course](sito:course.html).
 > 5. **Register for an exam sitting** on MyUnito, Esami (exams) section, as soon as registration opens: only one per exam period, limited places.
 > 6. **Arrive on time** at the Turing Lab with an identity document.
 

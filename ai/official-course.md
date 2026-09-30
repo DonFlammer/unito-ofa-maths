@@ -1,6 +1,6 @@
 ---
 titolo: "The “OFA Matematica” course"
-breve: "How the course on the OFA platform, which the test is built on, is organised: modules, units and activities, the notation it uses and the typos we found in its material. Checked on 30 September 2026."
+breve: "How the course on the OFA platform, which the test is built on, is organised: modules, units and activities, the notation it uses and the typos found in its material. Checked on 30 September 2026."
 italian_original: https://github.com/DonFlammer/unito-ofa-matematica/blob/main/ai/corso-ufficiale.md
 ---
 
@@ -104,7 +104,7 @@ The notes use the same notation, so there are no surprises in the test:
 
 ## Typos in the material
 
-While recalculating the course exercises to write the notes we found a few typos. Each one was double-checked with symbolic computation and **compared with the original page or PDF** on 30 September 2026. The notes have the correct version. The list only includes the typos we verified and is not a complete review of the material; in module 3 we found none. If you find others you can report them to the [platform helpdesk](https://www.ofa.unito.it/helpdesk/index.php?t=tcre).
+Recalculating the course exercises to write the notes turned up a few typos. Each one was double-checked with symbolic computation and **compared with the original page or PDF** on 30 September 2026. The notes have the correct version. The list only includes the verified typos and is not a complete review of the material; in module 3 none were found. If you find others you can report them to the [platform helpdesk](https://www.ofa.unito.it/helpdesk/index.php?t=tcre).
 
 ### Module 1
 
