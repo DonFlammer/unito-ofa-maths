@@ -546,6 +546,15 @@ html[lang="en"] .opz.mancata::after { content: "was correct"; }
 .meno-moto .rivela, .meno-moto .entra { opacity: 1; transform: none; }
 .meno-moto { scroll-behavior: auto; }
 
+/* ---------- passaggio tra le pagine ---------- */
+/* dissolvenza breve invece dello stacco (nei browser che la supportano); le stelle intanto continuano da dove erano
+   (stelle.js) e ciò che la pagina nuova ha già sullo schermo compare subito, senza entrata */
+@view-transition { navigation: auto; }
+html:active-view-transition .rivela, html:active-view-transition .entra { opacity: 1; transform: none; transition: none; animation: none; }
+.arrivo .entra { opacity: 1; animation: none; }
+html.arrivo:not(.pronto) .rivela { opacity: 1; transform: none; transition: none; }   /* finché sito.js non decide */
+html.meno-moto::view-transition-group(*), html.meno-moto::view-transition-old(*), html.meno-moto::view-transition-new(*) { animation: none; }
+
 @media print {
   #stelle, .barra, .piede, .indice, .q-azioni, .sim-barra, .nav-moduli { display: none !important; }
   body { background: #fff; color: #000; }
