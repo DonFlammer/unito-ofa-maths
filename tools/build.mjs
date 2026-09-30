@@ -147,6 +147,7 @@ function page({ path, title, description, body, active = '', reading = false, ka
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="${CSP}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
+<script src="${r}assets/js/memoria.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">

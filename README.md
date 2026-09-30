@@ -20,7 +20,7 @@ Unofficial guide to making up the **maths OFA** (additional learning requirement
 - **Italian for the OFA test**: the course and the test are in Italian; [`ai/italian-glossary.md`](ai/italian-glossary.md) lists the key Italian terms of each module and the typical phrasings of the questions.
 - **Context for AIs** in the [`ai/`](ai/) folder: all the research and all the content in Markdown, to give to any AI without redoing the research. There is a single file with everything ([`ai/_ALL_IN_ONE.md`](ai/_ALL_IN_ONE.md)) and a light one with rules and organisation ([`ai/_ESSENTIALS.md`](ai/_ESSENTIALS.md)); instructions and a prompt to copy are in [`ai/README.md`](ai/README.md).
 
-Progress (checklists, tests, mock tests, plan) is saved only in the browser of whoever uses the site. The site uses no cookies or external services: fonts and formula rendering are hosted here.
+Progress stays in your browser. Local profiles and encrypted transfer backups work across the four guides; see [local profiles and security](SECURITY.md). The site uses no cookies or external services: fonts and formula rendering are hosted here.
 
 ## How it is made
 

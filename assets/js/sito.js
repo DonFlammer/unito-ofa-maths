@@ -2,8 +2,8 @@
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-  const leggi = (k, def) => { try { const v = localStorage.getItem(k); return v === null ? def : JSON.parse(v); } catch { return def; } };
-  const scrivi = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* memoria del browser non disponibile */ } };
+  const leggi = (k, def) => { try { const v = (window.StudioStorage || localStorage).getItem(k); return v === null ? def : JSON.parse(v); } catch { return def; } };
+  const scrivi = (k, v) => { try { (window.StudioStorage || localStorage).setItem(k, JSON.stringify(v)); } catch { /* memoria del browser non disponibile */ } };
   // valori salvati: si usano solo se hanno la forma attesa (possono arrivare da un profilo importato o da altre pagine)
   const coppiaSalvata = v => (Array.isArray(v) && v.length === 2 && v.every(x => Number.isInteger(x) && x >= 0) ? v : null);
   const votoSalvato = v => (typeof v === 'number' && v >= 0 && v <= 10 ? v : null);
@@ -360,27 +360,38 @@
     const salvato = oggettoSalvato(leggi('ofa:piano', {})) || {};
     const oggi = new Date(); oggi.setHours(12, 0, 0, 0);
     const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    const daIso = s => { const [a, m, g] = s.split('-').map(Number); return new Date(a, m - 1, g, 12); };
+    const MAX_GIORNI = 366 * 5;
+    const daIso = s => {
+      if (typeof s !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(s)) return new Date(NaN);
+      const [a, m, g] = s.split('-').map(Number), d = new Date(a, m - 1, g, 12);
+      return a >= 1900 && a <= 2100 && d.getFullYear() === a && d.getMonth() === m - 1 && d.getDate() === g ? d : new Date(NaN);
+    };
+    fData.min = iso(new Date(oggi.getTime() + 864e5));
+    fData.max = iso(new Date(oggi.getTime() + MAX_GIORNI * 864e5));
     const fmt = d => d.toLocaleDateString(EN ? 'en-GB' : 'it-IT', { day: 'numeric', month: 'short' });
     const opzioni = $$('option', fEsame).map(o => o.value);
     const prima = opzioni.find(v => v !== 'altra' && daIso(v) > oggi) || 'altra';
     fEsame.value = salvato.esame && (opzioni.includes(salvato.esame)) && (salvato.esame === 'altra' || daIso(salvato.esame) > oggi) ? salvato.esame : prima;
-    fData.value = typeof salvato.data === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(salvato.data) ? salvato.data : iso(new Date(oggi.getTime() + 60 * 864e5));
-    fOre.value = Number.isFinite(salvato.ore) ? salvato.ore : 7;
+    fData.value = daIso(salvato.data) > oggi && daIso(salvato.data) <= daIso(fData.max) ? salvato.data : iso(new Date(oggi.getTime() + 60 * 864e5));
+    fOre.value = Number.isFinite(salvato.ore) && salvato.ore >= 1 && salvato.ore <= 40 ? salvato.ore : 7;
     const fatti = new Set(elencoSalvato(leggi('ofa:piano:fatti', [])).filter(x => typeof x === 'string'));
     function calcola() {
       const altra = fEsame.value === 'altra';
       fData.closest('.campo').hidden = !altra;
       const esame = daIso(altra ? fData.value : fEsame.value), ore = Number(fOre.value);
       outOre.textContent = t(`${ore} ore`, `${ore} hours`);
-      scrivi('ofa:piano', { esame: fEsame.value, data: fData.value, ore });
       const giorniAlTest = Math.round((esame - oggi) / 864e5);
       avviso.hidden = true;
       if (Number.isNaN(giorniAlTest)) { avviso.hidden = false; avviso.textContent = t('Scegli la data della prova.', 'Choose the date of the test.'); uscita.innerHTML = ''; sintesi.innerHTML = ''; return; }
       if (giorniAlTest < 1) { avviso.hidden = false; avviso.innerHTML = t('<strong>La data scelta è già passata.</strong> Scegli un altro appello.', '<strong>The chosen date has already passed.</strong> Choose another sitting.'); uscita.innerHTML = ''; sintesi.innerHTML = ''; return; }
+      if (giorniAlTest > MAX_GIORNI || !Number.isFinite(ore) || ore < 1 || ore > 40) {
+        avviso.hidden = false; avviso.textContent = t('Scegli una data entro cinque anni e da 1 a 40 ore a settimana.', 'Choose a date within five years and 1 to 40 hours per week.');
+        uscita.innerHTML = ''; sintesi.innerHTML = ''; return;
+      }
+      scrivi('ofa:piano', { esame: fEsame.value, data: fData.value, ore });
       // blocchi di 7 giorni contati all'indietro dal giorno della prova: l'ultimo finisce il giorno prima,
       // il primo parte da oggi e, se è più corto, riceve meno ore
-      const settimane = Math.max(1, Math.ceil(giorniAlTest / 7));
+      const settimane = Math.min(Math.ceil(MAX_GIORNI / 7), Math.max(1, Math.ceil(giorniAlTest / 7)));
       const settim = Array.from({ length: settimane }, (_, k) => {
         const fine = new Date(esame); fine.setDate(esame.getDate() - 1 - 7 * (settimane - 1 - k));
         const inizio = new Date(fine); inizio.setDate(fine.getDate() - 6);
