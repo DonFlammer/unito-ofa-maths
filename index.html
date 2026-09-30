@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-C3IxI/4e5VjLOHQ3lp8PJGTSBoLEV5UYJXKdcK+pZ20='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Making up the maths OFA — Computer Science UniTo 2026/27</title>
+<meta name="description" content="Unofficial guide to making up the maths OFA for Computer Science at the University of Turin: rules, notes for the eight modules, study plan and mock tests. English translation of the Italian original.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<script>try { if (localStorage.getItem('ofa:moto') === '"ridotto"') document.documentElement.classList.add('meno-moto'); } catch (e) {}</script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Making up the maths OFA — Computer Science UniTo 2026/27">
+<meta property="og:description" content="Unofficial guide to making up the maths OFA for Computer Science at the University of Turin: rules, notes for the eight modules, study plan and mock tests. English translation of the Italian original.">
+<link rel="alternate" hreflang="it" href="https://donflammer.github.io/unito-ofa-matematica/index.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2210%22%20fill%3D%22%23000%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%2210%22%20height%3D%2210%22%20fill%3D%22%23d7263f%22%2F%3E%3Cpath%20d%3D%22M14%2050h36M14%2039h36%22%20stroke%3D%22%23e8e5de%22%20stroke-width%3D%224%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preload" href="assets/fonts/source-serif-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/sito.css">
+</head>
+<body data-radice="">
+<canvas id="stelle" aria-hidden="true"></canvas>
+<a class="salta" href="#contenuto">Skip to content</a>
+<header class="barra"><div class="contenitore barra-in">
+<a class="logo" href="index.html"><span class="logo-segno" aria-hidden="true"></span><span class="logo-nome">Maths OFA</span><small>unofficial guide · Computer Science UniTo</small></a>
+<button class="menu-btn" type="button" aria-label="Open the menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+<nav class="menu" id="menu" aria-label="Site sections">
+<a href="index.html#programme">Notes</a>
+<a href="formulas.html">Formula sheet</a>
+<a href="entry-test.html">Entry test</a>
+<a href="plan.html">Study plan</a>
+<a href="mock-tests.html">Mock tests</a>
+<a href="rules.html">Rules and dates</a>
+<a href="glossary.html">Glossary</a>
+<a class="lingua" href="https://donflammer.github.io/unito-ofa-matematica/index.html" hreflang="it" lang="it">Italiano</a>
+<button type="button" class="anim-menu" id="anim-toggle" aria-pressed="false" aria-label="Reduced motion" title="Reduced motion: only the black background stays"><span class="anim-icona" aria-hidden="true"></span><span class="anim-testo">Reduced motion</span></button>
+</nav>
+</div></header>
+<main id="contenuto">
+<section class="frontespizio"><div class="contenitore">
+<span class="occhiello entra" style="--i:0">Unofficial guide · Computer Science degree programme · University of Turin · A.Y. 2026/27</span>
+<h1 class="entra" style="--i:1">Making up the maths OFA</h1>
+<p class="sotto entra" style="--i:2">Anyone who scored less than 5 out of 20 in the Basic Mathematics section of the TOLC-S must clear the additional learning requirement (OFA, <span lang="it">obbligo formativo aggiuntivo</span>) within the first year. This guide collects the official rules, the <strong>notes for the eight modules</strong> of the catch-up course and the tools to prepare for the test.</p>
+<p class="sotto entra" style="--i:2;font-size:1rem;margin-top:.9rem">English translation of <a class="link" href="https://donflammer.github.io/unito-ofa-matematica/" hreflang="it">the Italian original</a>: if the two differ, the Italian version prevails. The course and the test are in Italian: see the <a class="link" href="glossary.html">Italian glossary</a>.</p>
+<p class="data-agg entra" style="--i:3"><span>Updated on 30 September 2026</span><span>Sources on the <a class="link" href="rules.html#sources">Rules and dates</a> page</span></p>
+</div></section>
+
+<section><div class="contenitore sintesi rivela">
+<div>
+<h2>In short</h2>
+<dl class="fatti-tab">
+<dt>Who has the OFA</dt><dd>Anyone with less than 5/20 in Basic Mathematics on the TOLC-S</dd>
+<dt>How to clear it</dt><dd>The “OFA Matematica” course on www.ofa.unito.it and an in-person test</dd>
+<dt>The test</dt><dd>Five questions, 45 minutes, pass mark 6/10, no calculator</dd>
+<dt>Where</dt><dd>Turing Lab, Department of Computer Science, via Pessinetto 12</dd>
+<dt>Registration</dt><dd>MyUnito, activity INT1475: one sitting per exam period, limited places</dd>
+<dt>Deadline</dt><dd>Within the first year; otherwise second-year exams cannot be recorded</dd>
+</dl>
+</div>
+<div>
+<h2>In this guide</h2>
+<ol class="contenuti">
+<li><a href="#programme"><span>Notes for the eight modules<small>Theory, worked examples, exercises and checks</small></span></a></li>
+<li><a href="formulas.html"><span>Formula sheet<small>Definitions and rules on one page</small></span></a></li>
+<li><a href="entry-test.html"><span>Entry test<small>24 questions to choose where to start</small></span></a></li>
+<li><a href="plan.html"><span>Study plan<small>Week by week until the test</small></span></a></li>
+<li><a href="mock-tests.html"><span>Mock tests<small>Eight timed tests, with marking</small></span></a></li>
+<li><a href="rules.html"><span>Rules, dates and contacts<small>With the official sources</small></span></a></li>
+<li><a href="course.html"><span>The official course<small>Modules, activities and errata of the material</small></span></a></li>
+<li><a href="glossary.html"><span>Italian glossary<small>The Italian words of the course and the test</small></span></a></li>
+</ol>
+</div>
+</div></section>
+
+<section class="sezione" id="programme"><div class="contenitore">
+<div class="sezione-testa rivela"><h2><span class="num">1</span>The programme: eight modules</h2><p>The notes follow the modules of the “OFA Matematica” catch-up course, on which the test is built. Each module has the theory explained from the start, definitions and rules, methods, worked examples, common mistakes and graphs; at the end, exercises with solutions, a quiz and a checklist.</p></div>
+<div class="rivela"><table class="programma">
+<thead><tr><th>No.</th><th>Module</th><th>Units</th><th>Study</th><th>Checklist</th></tr></thead>
+<tbody>
+<tr data-modulo="1"><td class="n">1</td><td class="titolo"><a href="modules/01-language-sets-numbers.html">Language, sets, logic and numbers</a><small>Sets and set operations, connectives and quantifiers, negations, proofs and counterexamples; number sets, fractions, decimals, powers, radicals, percentages and intervals.</small></td><td class="meta">1.1 · 1.2</td><td class="meta">about 7 h</td><td class="meta"><span class="avanz"><span class="barra-avanz"><i></i></span><span>—</span></span></td></tr>
+<tr data-modulo="2"><td class="n">2</td><td class="titolo"><a href="modules/02-polynomials.html">Polynomials and factorisation</a><small>Monomials and polynomials, operations, special products, division and Ruffini's rule, factorisation and algebraic fractions.</small></td><td class="meta">2.1</td><td class="meta">about 6 h</td><td class="meta"><span class="avanz"><span class="barra-avanz"><i></i></span><span>—</span></span></td></tr>
+<tr data-modulo="3"><td class="n">3</td><td class="titolo"><a href="modules/03-equations-inequalities.html">First- and second-degree equations and inequalities, systems</a><small>First- and second-degree equations and inequalities, linear systems and word problems to translate into equations.</small></td><td class="meta">3.1 · 3.2 · 3.3</td><td class="meta">about 8 h</td><td class="meta"><span class="avanz"><span class="barra-avanz"><i></i></span><span>—</span></span></td></tr>
+<tr data-modulo="4"><td class="n">4</td><td class="titolo"><a href="modules/04-rational-radical-absolute-value.html">Rational, radical and absolute value equations and inequalities</a><small>Rational equations and inequalities, and those with roots or absolute values, without losing sight of the domain conditions.</small></td><td class="meta">4.1 · 4.2 · 4.3</td><td class="meta">about 9 h</td><td class="meta"><span class="avanz"><span class="barra-avanz"><i></i></span><span>—</span></span></td></tr>
+<tr data-modulo="5"><td class="n">5</td><td class="titolo"><a href="modules/05-analytic-geometry.html">Analytic geometry: lines and conics</a><small>Cartesian plane, distance and midpoint, the straight line and its equations, circle, parabola, ellipse and hyperbola.</small></td><td class="meta">5.1 · 5.2</td><td class="meta">about 9 h</td><td class="meta"><span class="avanz"><span class="barra-avanz"><i></i></span><span>—</span></span></td></tr>
+<tr data-modulo="6"><td class="n">6</td><td class="titolo"><a href="modules/06-functions.html">Real functions of a real variable</a><small>What a function is, domain and graph, the main properties (injective, inverse, composite, even, periodic, monotonic, bounded, continuous), translations and the most commonly used functions.</small></td><td class="meta">6.1 · 6.2</td><td class="meta">about 7 h</td><td class="meta"><span class="avanz"><span class="barra-avanz"><i></i></span><span>—</span></span></td></tr>
+<tr data-modulo="7"><td class="n">7</td><td class="titolo"><a href="modules/07-exponentials-logarithms.html">Exponentials and logarithms</a><small>Powers with real exponents, the exponential function, logarithms and their properties, exponential and logarithmic equations and inequalities.</small></td><td class="meta">7.1 · 7.2</td><td class="meta">about 8 h</td><td class="meta"><span class="avanz"><span class="barra-avanz"><i></i></span><span>—</span></span></td></tr>
+<tr data-modulo="8"><td class="n">8</td><td class="titolo"><a href="modules/08-trigonometry.html">Trigonometry</a><small>Angles in degrees and radians, sine, cosine and tangent on the unit circle, formulas, trigonometric equations and inequalities, triangles.</small></td><td class="meta">8.1 · 8.2</td><td class="meta">about 9 h</td><td class="meta"><span class="avanz"><span class="barra-avanz"><i></i></span><span>—</span></span></td></tr>
+</tbody></table></div>
+<p class="nota-piccola rivela">After the <a class="link" href="entry-test.html">entry test</a>, a red dot next to the number marks the modules to go over more carefully.</p>
+</div></section>
+
+<section class="sezione" id="procedure"><div class="contenitore">
+<div class="sezione-testa rivela"><h2><span class="num">2</span>How to clear it</h2><p>The procedure set by the degree programme for A.Y. 2026/27: take the catch-up course on the OFA platform and pass the in-person test within the first year.</p></div>
+<ol class="passi-lista rivela"><li><div><b>Check that you have the OFA.</b><p>The activity “INT1475 OFA - MATEMATICA” appears in your online transcript (libretto) on <a href="https://my.unito.it" target="_blank" rel="noopener">MyUnito</a> if your TOLC-S score in Basic Mathematics is below 5/20.</p></div></li><li><div><b>Enrol in the “OFA Matematica” course.</b><p>On the <a href="https://www.ofa.unito.it/course/view.php?id=20" target="_blank" rel="noopener">OFA platform</a>, with your UniTo SCU credentials; enrolment needs no key.</p></div></li><li><div><b>Study the programme of the eight modules.</b><p>The test questions are drawn from all the course material. The notes of this guide follow the same programme; the <a href="plan.html">study plan</a> spreads it over the weeks.</p></div></li><li><div><b>Book a sitting on MyUnito.</b><p>Exams section, activity INT1475: one sitting per exam period, limited places (about 60 in 2025/26).</p></div></li><li><div><b>Take the test.</b><p>In the Turing Lab, with an ID document and your SCU credentials: five questions in 45 minutes, pass mark 6/10, no calculator. The test is in Italian.</p></div></li></ol>
+</div></section>
+
+<section class="sezione" id="calendar"><div class="contenitore">
+<div class="sezione-testa rivela"><h2><span class="num">3</span>Test calendar</h2><p>The 2026/27 calendar has not been published yet (checked on 30 September 2026). The degree programme recommends taking the test in the autumn sittings. For reference, the 2025/26 sessions, all in the Turing Lab:</p></div>
+<div class="tabella rivela" style="max-width:50rem"><table><thead><tr><th>Session</th><th>Sittings</th><th>Registration</th></tr></thead><tbody><tr><td>24 and 28 November 2025</td><td>three sittings</td><td>from 7 November</td></tr><tr><td>14, 19 and 26 January 2026</td><td>three sittings</td><td>from late November</td></tr><tr><td>29 May and 4 June 2026</td><td>two sittings</td><td>from 27 February</td></tr><tr><td>3 and 18 September 2026</td><td>two sittings, no limit on places</td><td>from July</td></tr></tbody></table></div>
+<p class="nota-piccola rivela">The official dates appear on the <a class="link esterno" href="https://laurea.informatica.unito.it/do/home.pl/View?doc=Requisiti_di_ammissione.html" target="_blank" rel="noopener">degree programme's requirements page</a> (in Italian) and in the <a class="link esterno" href="https://esse3.unito.it/ListaAppelliOfferta.do" target="_blank" rel="noopener">exam listings on Esse3</a> (activity INT1475). All the 2025/26 sittings, with registrations and places, are on the <a class="link" href="rules.html">Rules and dates</a> page.</p>
+</div></section>
+
+<section class="sezione" id="faq"><div class="contenitore">
+<div class="sezione-testa rivela"><h2><span class="num">4</span>Frequently asked questions</h2><p>The complete rules, with the sources, are on the <a class="link" href="rules.html">Rules and dates</a> page.</p></div>
+<div class="faq rivela"><details><summary>How do you know if you have the OFA?</summary><div class="risposta"><p>From your TOLC-S score: less than 5 out of 20 in the Basic Mathematics section. The activity “INT1475 OFA - MATEMATICA” appears in your online transcript on MyUnito.</p></div></details><details><summary>What happens if you don't pass it within the first year?</summary><div class="risposta"><p>Second-year exams cannot be recorded until the OFA is passed: the 2026/27 Degree Programme Guide requires, for the exams of the years after the first, at least 21 CFU (ECTS credits) of first-year exams <em>and</em> the maths OFA passed.</p></div></details><details><summary>Can you take first-year exams in the meantime?</summary><div class="risposta"><p>Yes: the OFA only blocks second-year exams.</p></div></details><details><summary>How many times can you take the test?</summary><div class="risposta"><p>One sitting per exam period, but there are several periods during the year: in 2025/26 in November, January, May-June and September.</p></div></details><details><summary>Is a calculator allowed?</summary><div class="risposta"><p>No. Students with a disability or a specific learning disorder (DSA) can request compensatory tools and a third more time, following the University's procedure before the test.</p></div></details><details><summary>Is the course in English?</summary><div class="risposta"><p>No: the “OFA Matematica” course, its material and the test are in Italian. This guide is an English translation of the Italian original; the <a href="glossary.html">Italian glossary</a> lists the words and phrases you will meet.</p></div></details></div>
+</div></section>
+
+<section class="sezione" id="first-year"><div class="contenitore">
+<div class="sezione-testa rivela"><h2><span class="num">5</span>The rest of the first year</h2><p>The OFA is only one part of the first year. For the actual courses there is this guide's twin, the <strong>Computer Science notes</strong>: lesson by lesson, with worked examples, simulators and exercises, plus sheets for every first-year course for channels A, B and C, with exams, exam dates and lecturers.</p></div>
+<p class="rivela"><a class="btn" href="https://donflammer.github.io/unito-computer-science/">Open the first-year notes</a></p>
+</div></section>
+</main>
+<footer class="piede"><div class="contenitore">
+<div class="piede-in">
+<div>
+<h4>Maths OFA</h4>
+<p>Unofficial guide to making up the maths OFA for the Computer Science degree programme at the University of Turin, A.Y. 2026/27. Updated on 30 September 2026.</p>
+<p>Unofficial guide, based on the OFA course programme and UniTo's official pages; English translation of the Italian original; published by DonFlammer. It may contain errors: for rules, dates and registration only the official sources are authoritative. <a class="link esterno" href="https://github.com/DonFlammer/unito-ofa-maths/blob/main/DISCLAIMER.md" target="_blank" rel="noopener">Disclaimer</a></p>
+</div>
+<div>
+<h4>The guide</h4>
+<ul>
+<li><a href="index.html#programme">Notes for the eight modules</a></li>
+<li><a href="formulas.html">Formula sheet</a></li>
+<li><a href="entry-test.html">Entry test</a></li>
+<li><a href="plan.html">Study plan</a></li>
+<li><a href="mock-tests.html">Mock tests</a></li>
+<li><a href="rules.html">Rules, dates and contacts</a></li>
+<li><a href="course.html">The official course and its errata</a></li>
+<li><a href="glossary.html">Italian glossary for the test</a></li>
+<li><a class=" esterno" href="https://github.com/DonFlammer/unito-ofa-maths/tree/main/ai" target="_blank" rel="noopener">Context for AIs</a></li>
+</ul>
+</div>
+<div>
+<h4>Official sources and services</h4>
+<ul>
+<li><a class=" esterno" href="https://www.ofa.unito.it/course/view.php?id=20" target="_blank" rel="noopener">The “OFA Matematica” course</a></li>
+<li><a class=" esterno" href="https://laurea.informatica.unito.it/do/home.pl/View?doc=Requisiti_di_ammissione.html" target="_blank" rel="noopener">Admission requirements and OFA (Italian)</a></li>
+<li><a class=" esterno" href="https://my.unito.it" target="_blank" rel="noopener">MyUnito</a></li>
+<li><a class=" esterno" href="https://esse3.unito.it/ListaAppelliOfferta.do" target="_blank" rel="noopener">Exam listings on Esse3</a></li>
+<li><a class=" esterno" href="https://donflammer.github.io/unito-computer-science/" target="_blank" rel="noopener">First-year Computer Science notes</a></li>
+<li><a class=" esterno" href="https://t.me/rapsodico" target="_blank" rel="noopener">Contact: Telegram @rapsodico</a></li>
+<li><a class=" esterno" href="https://github.com/DonFlammer/unito-ofa-maths" target="_blank" rel="noopener">Source on GitHub</a> · <a class=" esterno" href="https://github.com/DonFlammer/unito-ofa-matematica" target="_blank" rel="noopener">Italian original</a></li>
+</ul>
+</div>
+</div>
+<div class="piede-fondo"><span>Licence CC BY-NC-SA 4.0 · DonFlammer · not a University of Turin website</span><button type="button" class="interruttore" id="interruttore-moto" aria-pressed="false"><span class="pista" aria-hidden="true"></span>Reduced motion</button></div>
+</div></footer>
+<script src="assets/js/stelle.js" defer></script>
+<script src="assets/js/sito.js" defer></script>
+<script src="assets/js/studio.js" defer></script>
+</body>
+</html>

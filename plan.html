@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-C3IxI/4e5VjLOHQ3lp8PJGTSBoLEV5UYJXKdcK+pZ20='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Study plan — Maths OFA</title>
+<meta name="description" content="A week-by-week study plan to make up the maths OFA, tuned to the date of the test.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<script>try { if (localStorage.getItem('ofa:moto') === '"ridotto"') document.documentElement.classList.add('meno-moto'); } catch (e) {}</script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Study plan — Maths OFA">
+<meta property="og:description" content="A week-by-week study plan to make up the maths OFA, tuned to the date of the test.">
+<link rel="alternate" hreflang="it" href="https://donflammer.github.io/unito-ofa-matematica/piano.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2210%22%20fill%3D%22%23000%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%2210%22%20height%3D%2210%22%20fill%3D%22%23d7263f%22%2F%3E%3Cpath%20d%3D%22M14%2050h36M14%2039h36%22%20stroke%3D%22%23e8e5de%22%20stroke-width%3D%224%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preload" href="assets/fonts/source-serif-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/sito.css">
+<link rel="stylesheet" href="assets/katex/katex.min.css">
+</head>
+<body data-radice="">
+<canvas id="stelle" aria-hidden="true"></canvas>
+<a class="salta" href="#contenuto">Skip to content</a>
+<header class="barra"><div class="contenitore barra-in">
+<a class="logo" href="index.html"><span class="logo-segno" aria-hidden="true"></span><span class="logo-nome">Maths OFA</span><small>unofficial guide · Computer Science UniTo</small></a>
+<button class="menu-btn" type="button" aria-label="Open the menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+<nav class="menu" id="menu" aria-label="Site sections">
+<a href="index.html#programme">Notes</a>
+<a href="formulas.html">Formula sheet</a>
+<a href="entry-test.html">Entry test</a>
+<a href="plan.html" class="attivo" aria-current="page">Study plan</a>
+<a href="mock-tests.html">Mock tests</a>
+<a href="rules.html">Rules and dates</a>
+<a href="glossary.html">Glossary</a>
+<a class="lingua" href="https://donflammer.github.io/unito-ofa-matematica/piano.html" hreflang="it" lang="it">Italiano</a>
+<button type="button" class="anim-menu" id="anim-toggle" aria-pressed="false" aria-label="Reduced motion" title="Reduced motion: only the black background stays"><span class="anim-icona" aria-hidden="true"></span><span class="anim-testo">Reduced motion</span></button>
+</nav>
+</div></header>
+<main id="contenuto">
+<section class="testata-pagina"><div class="contenitore">
+<nav class="briciole entra" style="--i:0" aria-label="Breadcrumb"><a href="index.html">Maths OFA</a><span aria-hidden="true">/</span><span>Study plan</span></nav>
+
+<h1 class="entra" style="--i:1">Study plan</h1>
+<p class="sotto entra" style="--i:2">A week-by-week plan up to the day of the test, with the method for studying each module and the strategy for the 45 minutes.</p>
+
+</div></section><div class="contenitore"><section id="piano" class="pannello" aria-labelledby="build-your-plan">
+<h2 id="build-your-plan">The plan, week by week</h2>
+<p style="color:var(--testo-2);margin:0 0 1.2rem">Choose the session and the hours per week: the plan spreads the eight modules (about 63 hours) and the mock tests until the test. If you took the <a class="link" href="entry-test.html">entry test</a>, it gives more time to the modules where it went worse. Your ticks stay saved in this browser.</p>
+<div class="piano-form">
+<div class="campo"><label for="piano-esame">Session</label><select id="piano-esame">
+<option value="2026-11-24">Late November 2026 (estimate)</option>
+<option value="2027-01-14">Mid-January 2027 (estimate)</option>
+<option value="2027-05-28">Late May 2027 (estimate)</option>
+<option value="2027-09-03">Early September 2027 (estimate)</option>
+<option value="altra">Another date</option>
+</select></div>
+<div class="campo" hidden><label for="piano-data">Date of the test</label><input type="date" id="piano-data"></div>
+<div class="campo"><label for="piano-ore">Hours per week: <output id="piano-ore-val" for="piano-ore">7 hours</output></label><input type="range" id="piano-ore" min="3" max="20" step="1" value="7"></div>
+</div>
+<p class="nota-piccola">The 2026/27 dates are not published yet: the estimates follow the 2025/26 calendar (sittings on 24 and 28 November, 14, 19 and 26 January, 29 May and 4 June, 3 and 18 September). The official dates are on the <a class="link" href="rules.html#dates-and-registration">Rules and dates</a> page.</p>
+<div id="piano-sintesi" class="piano-sintesi"></div>
+<div id="piano-avviso" class="avviso" hidden></div>
+<ol id="piano-settimane" class="settimane"></ol>
+</section></div><div class="contenitore pagina-modulo" style="margin-top:3rem"><aside class="indice" aria-label="Page contents"><details open><summary>Page contents</summary><p class="indice-titolo">On this page</p><ol><li class="l2"><a href="#where-to-start">Where to start</a></li><li class="l2"><a href="#how-to-study-a-module">How to study a module</a></li><li class="l2"><a href="#an-example-eight-weeks-to-the-end-of-november">An example: eight weeks to the end of November</a></li><li class="l2"><a href="#without-a-calculator">Without a calculator</a></li><li class="l2"><a href="#during-the-45-minutes">During the 45 minutes</a></li><li class="l2"><a href="#if-you-get-stuck">If you get stuck</a></li></ol></details></aside><article class="testo"><h2 id="where-to-start"><a class="ancora" href="#where-to-start" aria-hidden="true" tabindex="-1">#</a>Where to start</h2>
+<ol>
+<li>Take the <a href="entry-test.html">entry test</a>: 24 questions, about 30 minutes, without a calculator. At the end you see your result module by module, and the plan above gives more time to the modules where you did worst.</li>
+<li>Choose the exam date to aim for. The degree programme recommends the <strong>autumn sittings</strong> (in 2025/26 they were on 24 and 28 November): the sooner you catch up on the basics, the faster you move on with your studies.</li>
+<li>Decide how many hours a week you can put in, on top of lectures. If you start with serious gaps you need about 75 hours in all: sixty or so for the eight modules, the rest for the mock tests and revision. That means about 10 hours a week for 8 weeks, or 6 hours a week for 13 weeks. If some modules go well in the entry test, the plan takes time away from them.</li>
+<li>Follow the modules <strong>in order</strong>: each module uses the ones before it (rational equations use factorisation, logarithmic inequalities use second-degree ones, and so on).</li>
+</ol>
+<h2 id="how-to-study-a-module"><a class="ancora" href="#how-to-study-a-module" aria-hidden="true" tabindex="-1">#</a>How to study a module</h2>
+<aside class="rq rq-metodo" id="r1"><div class="rq-testa"><span class="rq-tipo">Method</span> <span class="rq-titolo">A module in six steps</span></div><div class="rq-corpo"><ol>
+<li><strong>Read the notes</strong> for the module with pen and paper. When you reach a worked example, cover it and try to do it on your own, then compare.</li>
+<li><strong>Open the Libro (book) for the same module</strong> on the <a href="https://www.ofa.unito.it/course/view.php?id=20" target="_blank" rel="noopener" class="esterno">OFA platform</a> (OFA: additional learning requirement, <em>obbligo formativo aggiuntivo</em>): it is the material the test is built on. It also helps you get used to the notation you will find.</li>
+<li><strong>Exercises</strong>: first those in the notes, from basic level to test level, then the “Esercizi” (exercises) PDFs on the platform, checking with the “Soluzioni” (solutions) PDFs.</li>
+<li><strong>Online tests on the platform</strong>: the “Test” of each unit and the “Test modulo” (module test). Redo it until you get through it with no mistakes.</li>
+<li><strong>Quizzes and checklist</strong> at the end of the notes. If a checklist item is not clear to you, reread that section.</li>
+<li><strong>Spaced revision</strong>: every two modules, 20 minutes on the <a href="formulas.html">formula sheet</a> for the previous modules.</li>
+</ol>
+</div></aside>
+<aside class="rq rq-trappola" id="r2"><div class="rq-testa"><span class="rq-tipo">Common mistake</span> <span class="rq-titolo">Reading is not enough</span></div><div class="rq-corpo"><p>Rereading the notes gives you the impression that you have understood, but in the test you need to be able to do the calculations on your own, by hand and with the clock ticking. For every hour of reading, at least one hour of exercises.</p>
+</div></aside>
+<h2 id="an-example-eight-weeks-to-the-end-of-november"><a class="ancora" href="#an-example-eight-weeks-to-the-end-of-november" aria-hidden="true" tabindex="-1">#</a>An example: eight weeks to the end of November</h2>
+<p>This is the plan the site suggests if you start at the end of September with 10 hours a week and aim for a sitting at the end of November. The plan at the top of the page recalculates it for your dates and your hours.</p>
+<div class="tabella"><table><thead><tr><th>Week</th><th>What to do</th></tr></thead><tbody><tr><td>1</td><td>online transcript (libretto), enrolment in the OFA course, entry test; module 1 (language, sets, numbers)</td></tr>
+<tr><td>2</td><td>module 2 (polynomials and factorisation); module 3, first- and second-degree equations and inequalities</td></tr>
+<tr><td>3</td><td>module 3, systems; module 4, rational and radical equations and inequalities</td></tr>
+<tr><td>4</td><td>module 4, absolute value; module 5, Cartesian plane, straight line and the first conics</td></tr>
+<tr><td>5</td><td>end of module 5; module 6 (functions)</td></tr>
+<tr><td>6</td><td><strong>register for the sitting</strong> as soon as registration opens; module 7 (exponentials and logarithms); start of module 8</td></tr>
+<tr><td>7</td><td>module 8 (trigonometry); mock test 1</td></tr>
+<tr><td>8</td><td>mock tests 2–8 and targeted revision of the modules you got wrong; the day after, the test</td></tr></tbody></table></div>
+<h2 id="without-a-calculator"><a class="ancora" href="#without-a-calculator" aria-hidden="true" tabindex="-1">#</a>Without a calculator</h2>
+<p>In the test the numbers are chosen so that the calculations can be done by hand, but you need to be quick. Train like this right from the start:</p>
+<ul>
+<li><strong>Fractions</strong>: simplify before multiplying; to add, use the least common multiple, not the product of the denominators.</li>
+<li><strong>Powers and roots</strong>: learn by heart the squares up to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>20</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">20^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">2</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>, the cubes up to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">10^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span>, the powers of 2 up to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>10</mn></msup><mo>=</mo><mn>1024</mn></mrow><annotation encoding="application/x-tex">2^{10} = 1024</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1024</span></span></span></span>, the powers of 3 up to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mn>5</mn></msup><mo>=</mo><mn>243</mn></mrow><annotation encoding="application/x-tex">3^5 = 243</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">243</span></span></span></span>.</li>
+<li><strong>Logarithms</strong>: recognise the powers: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mn>32</mn><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">\log_2 32 = 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9386em;vertical-align:-0.2441em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.0139em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.207em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2441em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">32</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span> because <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>5</mn></msup><mo>=</mo><mn>32</mn></mrow><annotation encoding="application/x-tex">2^5 = 32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">32</span></span></span></span>; <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>10</mn></msub><mn>0.001</mn><mo>=</mo><mo>−</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\log_{10} 0.001 = -3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9386em;vertical-align:-0.2441em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.0139em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.207em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2441em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.001</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">3</span></span></span></span>.</li>
+<li><strong>Trigonometry</strong>: you must know the values of sine, cosine and tangent for <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>π</mi><mn>6</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{\pi}{6}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0404em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6954em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">π</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>π</mi><mn>4</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{\pi}{4}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0404em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6954em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">π</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>π</mi><mn>3</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{\pi}{3}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0404em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6954em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">π</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>π</mi><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{\pi}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0404em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6954em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">π</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> without thinking; the others are worked out from the unit circle.</li>
+<li><strong>Checking</strong>: before choosing an answer, estimate the order of magnitude and substitute the result into the original equation. In multiple-choice quizzes, this is often the quickest way.</li>
+</ul>
+<h2 id="during-the-45-minutes"><a class="ancora" href="#during-the-45-minutes" aria-hidden="true" tabindex="-1">#</a>During the 45 minutes</h2>
+<aside class="rq rq-metodo" id="r3"><div class="rq-testa"><span class="rq-tipo">Method</span> <span class="rq-titolo">Strategy for the test</span></div><div class="rq-corpo"><ol>
+<li><strong>Read all 5 questions</strong> (one minute): work out which ones you can do straight away.</li>
+<li><strong>Start with the easiest</strong>: scoring points early takes the anxiety away.</li>
+<li><strong>Keep up the pace</strong>: about 9 minutes per question. If after 12 minutes you are still stuck, move on to the next one and come back later.</li>
+<li><strong>Two-part questions</strong>: each part is worth 1 point. If the second is hard, at least make sure of the first.</li>
+<li><strong>Numeric answers</strong>: write the number in the form requested (integer, decimal or fraction) and double-check the sign.</li>
+<li><strong>No penalties</strong>: never leave an answer blank; if you don&#39;t know, rule out the impossible options and choose.</li>
+<li><strong>Last 5 minutes</strong>: double-check the domain conditions and the directions of the inequalities, where most points are lost.</li>
+</ol>
+</div></aside>
+<h2 id="if-you-get-stuck"><a class="ancora" href="#if-you-get-stuck" aria-hidden="true" tabindex="-1">#</a>If you get stuck</h2>
+<ul>
+<li>Reread the section of the notes and redo the worked examples before the exercises.</li>
+<li>Ask the first-year tutors (<a href="mailto:tutorato.informatica@unito.it">tutorato.informatica@unito.it</a>) or in the first-year Telegram group: someone is often preparing for the same sitting.</li>
+<li>For doubts about the OFA rules: <a href="mailto:commofa@educ.di.unito.it">commofa@educ.di.unito.it</a>. All the contacts are on the page <a href="rules.html#help-and-contacts">Rules, dates and contacts</a>.</li>
+</ul>
+</article></div>
+</main>
+<footer class="piede"><div class="contenitore">
+<div class="piede-in">
+<div>
+<h4>Maths OFA</h4>
+<p>Unofficial guide to making up the maths OFA for the Computer Science degree programme at the University of Turin, A.Y. 2026/27. Updated on 30 September 2026.</p>
+<p>Unofficial guide, based on the OFA course programme and UniTo's official pages; English translation of the Italian original; published by DonFlammer. It may contain errors: for rules, dates and registration only the official sources are authoritative. <a class="link esterno" href="https://github.com/DonFlammer/unito-ofa-maths/blob/main/DISCLAIMER.md" target="_blank" rel="noopener">Disclaimer</a></p>
+</div>
+<div>
+<h4>The guide</h4>
+<ul>
+<li><a href="index.html#programme">Notes for the eight modules</a></li>
+<li><a href="formulas.html">Formula sheet</a></li>
+<li><a href="entry-test.html">Entry test</a></li>
+<li><a href="plan.html">Study plan</a></li>
+<li><a href="mock-tests.html">Mock tests</a></li>
+<li><a href="rules.html">Rules, dates and contacts</a></li>
+<li><a href="course.html">The official course and its errata</a></li>
+<li><a href="glossary.html">Italian glossary for the test</a></li>
+<li><a class=" esterno" href="https://github.com/DonFlammer/unito-ofa-maths/tree/main/ai" target="_blank" rel="noopener">Context for AIs</a></li>
+</ul>
+</div>
+<div>
+<h4>Official sources and services</h4>
+<ul>
+<li><a class=" esterno" href="https://www.ofa.unito.it/course/view.php?id=20" target="_blank" rel="noopener">The “OFA Matematica” course</a></li>
+<li><a class=" esterno" href="https://laurea.informatica.unito.it/do/home.pl/View?doc=Requisiti_di_ammissione.html" target="_blank" rel="noopener">Admission requirements and OFA (Italian)</a></li>
+<li><a class=" esterno" href="https://my.unito.it" target="_blank" rel="noopener">MyUnito</a></li>
+<li><a class=" esterno" href="https://esse3.unito.it/ListaAppelliOfferta.do" target="_blank" rel="noopener">Exam listings on Esse3</a></li>
+<li><a class=" esterno" href="https://donflammer.github.io/unito-computer-science/" target="_blank" rel="noopener">First-year Computer Science notes</a></li>
+<li><a class=" esterno" href="https://t.me/rapsodico" target="_blank" rel="noopener">Contact: Telegram @rapsodico</a></li>
+<li><a class=" esterno" href="https://github.com/DonFlammer/unito-ofa-maths" target="_blank" rel="noopener">Source on GitHub</a> · <a class=" esterno" href="https://github.com/DonFlammer/unito-ofa-matematica" target="_blank" rel="noopener">Italian original</a></li>
+</ul>
+</div>
+</div>
+<div class="piede-fondo"><span>Licence CC BY-NC-SA 4.0 · DonFlammer · not a University of Turin website</span><button type="button" class="interruttore" id="interruttore-moto" aria-pressed="false"><span class="pista" aria-hidden="true"></span>Reduced motion</button></div>
+</div></footer>
+<script type="application/json" id="dati-moduli">[{"numero":1,"titolo":"Language, sets, logic and numbers","ore":7,"unita":["1.1 Elements of set theory and logic","1.2 Numbers"],"url":"modules/01-language-sets-numbers.html"},{"numero":2,"titolo":"Polynomials and factorisation","ore":6,"unita":["2.1 Polynomials and factorisation"],"url":"modules/02-polynomials.html"},{"numero":3,"titolo":"First- and second-degree equations and inequalities, systems","ore":8,"unita":["3.1 First-degree equations and inequalities","3.2 Second-degree equations and inequalities","3.3 Systems of equations"],"url":"modules/03-equations-inequalities.html"},{"numero":4,"titolo":"Rational, radical and absolute value equations and inequalities","ore":9,"unita":["4.1 Rational equations and inequalities","4.2 Radical equations and inequalities","4.3 Absolute value equations and inequalities"],"url":"modules/04-rational-radical-absolute-value.html"},{"numero":5,"titolo":"Analytic geometry: lines and conics","ore":9,"unita":["Introduction: the Cartesian plane","5.1 The straight line in the Cartesian plane","5.2 Conic sections"],"url":"modules/05-analytic-geometry.html"},{"numero":6,"titolo":"Real functions of a real variable","ore":7,"unita":["6.1 Definition of a function and main features","6.2 Examples of useful functions"],"url":"modules/06-functions.html"},{"numero":7,"titolo":"Exponentials and logarithms","ore":8,"unita":["7.1 Exponentials and logarithms","7.2 Exponential and logarithmic equations and inequalities"],"url":"modules/07-exponentials-logarithms.html"},{"numero":8,"titolo":"Trigonometry","ore":9,"unita":["Introduction: unit circle and angles","8.1 Trigonometric functions","8.2 Trigonometric equations and inequalities"],"url":"modules/08-trigonometry.html"}]</script>
+<script src="assets/js/stelle.js" defer></script>
+<script src="assets/js/sito.js" defer></script>
+<script src="assets/js/studio.js" defer></script>
+</body>
+</html>

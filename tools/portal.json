@@ -1,0 +1,605 @@
+[
+ {
+  "modulo": 1,
+  "url": "https://www.ofa.unito.it/course/view.php?id=20&section=1",
+  "attivita": [
+   {
+    "tipo": "Libro",
+    "nome": "1.1 Elementi di teoria degli insiemi e logica",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1240"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 1.1 Gli insiemi",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1242"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Applicazioni 1.1 Un rompicapo tra logica e vita quotidiana",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1246"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 1.1 Ulteriori esercizi di logica",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1248"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 1.1 Ulteriori esercizi di logica",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1250"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 1.1",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1792"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "1.2 Numeri",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1256"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 1.2 Operazioni tra numeri",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1258"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 1.2 Dal linguaggio quotidiano alla simbologia matematica",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1260"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 1.2 Ulteriori esercizi sui numeri",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1262"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 1.2 Ulteriori esercizi sui numeri",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1264"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 1.2",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1794"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test modulo 1",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1796"
+   }
+  ]
+ },
+ {
+  "modulo": 2,
+  "url": "https://www.ofa.unito.it/course/view.php?id=20&section=2",
+  "attivita": [
+   {
+    "tipo": "Libro",
+    "nome": "2.1 Polinomi e fattorizzazione",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1270"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 2.1 Polinomi e loro fattorizzazione",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1272"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 2.1 La fattorizzazione di polinomi in matematica e non solo",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1274"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 2.1 Ulteriori esercizi sui polinomi",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1276"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 2.1 Ulteriori esercizi sui polinomi",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1278"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 2.1",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1798"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test modulo 2",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1800"
+   }
+  ]
+ },
+ {
+  "modulo": 3,
+  "url": "https://www.ofa.unito.it/course/view.php?id=20&section=3",
+  "attivita": [
+   {
+    "tipo": "Libro",
+    "nome": "3.1 Equazioni e disequazioni algebriche di 1° grado con una incognita",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1284"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 3.1 Le equazioni di 1° grado con una incognita",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1286"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 3.1 Un'equazione di 1° grado per esprimere l'età di tre fratelli",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1288"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 3.1 Ulteriori esercizi su equazioni e disequazioni di 1° grado",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1290"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 3.1 Ulteriori esercizi su equazioni e disequazioni di 1° grado",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1292"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 3.1",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1802"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "3.2 Equazioni e disequazioni algebriche di 2° grado con una incognita",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1298"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 3.2 Le equazioni di 2° grado con una incognita",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1300"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 3.2 Applicazione di equazioni di 2° grado alla risoluzione di problemi",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1302"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 3.2 Applicazione di equazioni di 2° grado alla risoluzione di problemi",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1304"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 3.2",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1804"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "3.3 Sistemi di equazioni",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1310"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazione 3.3 Alla ricerca di un numero che soddisfi le richieste",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1312"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 3.3 Sistemi lineari di equazioni",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1314"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 3.3 Sistemi lineari di equazioni",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1316"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test modulo 3",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1806"
+   }
+  ]
+ },
+ {
+  "modulo": 4,
+  "url": "https://www.ofa.unito.it/course/view.php?id=20&section=4",
+  "attivita": [
+   {
+    "tipo": "Libro",
+    "nome": "4.1 Equazioni e disequazioni algebriche fratte",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1322"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 4.1 Equazioni e disequazioni fratte",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1324"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazione 4.1 Le equazioni fratte e la realtà: un binomio possibile?",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1326"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 4.1 Ulteriori esercizi su equazioni e disequazioni fratte",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1328"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 4.1 Ulteriori esercizi su equazioni e disequazioni fratte",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1330"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 4.1 equazioni e disequazioni fratte",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1808"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "4.2 Equazioni e disequazioni irrazionali",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1336"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 4.2 Le disequazioni irrazionali",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1338"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 4.2 Ulteriori esercizi su equazioni e disequazioni irrazionali",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1340"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 4.2 Ulteriori esercizi su equazioni e disequazioni irrazionali",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1342"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 4.2 equazioni e disequazioni irrazionali",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1810"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "4.3 Equazioni e disequazioni con valore assoluto",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1348"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 4.3 Equazioni e disequazioni con valore assoluto",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1350"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazione 4.3 Una disequazione con valore assoluto per esprimere la temperatura corporea",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1352"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 4.3 Ulteriori esercizi su equazioni e disequazioni con valore assoluto",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1354"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 4.3 Ulteriori esercizi su equazioni e disequazioni con valore assoluto",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1356"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 4.3 Equazioni e disequazioni con modulo",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1812"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test finale modulo 4",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1814"
+   }
+  ]
+ },
+ {
+  "modulo": 5,
+  "url": "https://www.ofa.unito.it/course/view.php?id=20&section=5",
+  "attivita": [
+   {
+    "tipo": "Pagina",
+    "nome": "Introduzione: il piano cartesiano",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1362"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "5.1 La retta nel piano cartesiano",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1364"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 5.1 La retta nel piano cartesiano",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1366"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 5.1 Quale parcheggio è più conveniente?",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1368"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 5.1 Ulteriori esercizi su piano cartesiano e retta",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1370"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 5.1 Ulteriori esercizi su piano cartesiano e retta",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1372"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 5.1 Piano cartesiano e retta",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1816"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "5.2 Le coniche",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1378"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 5.2 La parabola nel piano cartesiano",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1380"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 5.2 La parabola per la risoluzione di disequazioni",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1382"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Curiosità 5.2 Perchè le coniche si chiamano \"coniche\"?",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1384"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 5.2 Ulteriori esercizi sulle coniche",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1386"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 5.2 Ulteriori esercizi sulle coniche",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1388"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 5.2 Le coniche",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1818"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test fine modulo 5",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1820"
+   }
+  ]
+ },
+ {
+  "modulo": 6,
+  "url": "https://www.ofa.unito.it/course/view.php?id=20&section=6",
+  "attivita": [
+   {
+    "tipo": "PDF",
+    "nome": "Nota introduttiva",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1394"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "6.1 Definizione di funzione e principali caratteristiche",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1396"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 6.1 Grafici di funzione",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1398"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 6.1 Legame tra grafici ed equazioni",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1400"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 6.1 Ulteriori esercizi su funzioni e loro caratteristiche",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1402"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 6.1 Ulteriori esercizi su funzioni e loro caratteristiche",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1404"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 6.1 Funzioni e loro caratteristiche",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1822"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "6.2 Esempi di funzioni utili",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1410"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 6.2 Il valore assoluto di una funzione",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1412"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 6.2 Proporzionalità diretta e inversa in fisica",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1414"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 6.2 Ulteriori esercizi sulle funzioni",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1416"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 6.2 Ulteriori esercizi sulle funzioni",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1418"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 6.2 Funzioni utili",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1824"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test fine Modulo 6",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1826"
+   }
+  ]
+ },
+ {
+  "modulo": 7,
+  "url": "https://www.ofa.unito.it/course/view.php?id=20&section=7",
+  "attivita": [
+   {
+    "tipo": "Libro",
+    "nome": "7.1 Esponenziali e logaritmi",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1424"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Nota 7.1 La base e, la base 10",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1426"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 7.1 La funzione esponenziale",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1428"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 7.1 La funzione logaritmica",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1430"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 7.1 Esponenziali per modellizzare la realtà",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1432"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 7.1 Ulteriori esercizi sui logaritmi",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1434"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 7.1 Ulteriori esercizi sui logaritmi",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1436"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 7.1 Esponenziali e logaritmi",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1828"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "7.2 Equazioni e disequazioni esponenziali e logaritmiche",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1442"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 7.2 Il pH di una soluzione chimica",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1444"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 7.2 Ulteriori esercizi su equazioni e disequazioni esponenziali e logaritmiche",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1446"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 7.2 Ulteriori esercizi su equazioni e disequazioni esponenziali e logaritmiche",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1448"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 7.2 Equazioni e disequazioni esponenziali e logaritmiche",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1830"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test fine modulo 7",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1832"
+   }
+  ]
+ },
+ {
+  "modulo": 8,
+  "url": "https://www.ofa.unito.it/course/view.php?id=20&section=8",
+  "attivita": [
+   {
+    "tipo": "Pagina",
+    "nome": "Introduzione: circonferenza goniometrica e angoli",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1454"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "8.1 Funzioni trigonometriche",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1456"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 8.1 La funzione trigonometrica seno",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1458"
+   },
+   {
+    "tipo": "Esplora",
+    "nome": "Esplora 8.1 La funzione trigonometrica coseno",
+    "url": "https://www.ofa.unito.it/mod/maplews/view.php?id=1460"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 8.1 Legami con la fisica",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1462"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 8.1 Ulteriori esercizi sulle funzioni trigonometriche",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1464"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 8.1 Ulteriori esercizi sulle funzioni trigonometriche",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1466"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 8.1 Circonferenza goniometrica, angoli e funzioni trigonometriche",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1834"
+   },
+   {
+    "tipo": "Libro",
+    "nome": "8.2 Equazioni e disequazioni trigonometriche",
+    "url": "https://www.ofa.unito.it/mod/book/view.php?id=1472"
+   },
+   {
+    "tipo": "Pagina",
+    "nome": "Applicazioni 8.2 Trigonometria e triangoli",
+    "url": "https://www.ofa.unito.it/mod/page/view.php?id=1474"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Esercizi 8.2 Ulteriori esercizi su equazioni e disequazioni trigonometriche",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1476"
+   },
+   {
+    "tipo": "PDF",
+    "nome": "Soluzioni 8.2 Ulteriori esercizi su equazioni e disequazioni trigonometriche",
+    "url": "https://www.ofa.unito.it/mod/resource/view.php?id=1478"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test 8.2 Equazioni e disequazioni trigonometriche",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1836"
+   },
+   {
+    "tipo": "Test online",
+    "nome": "Test fine Modulo 8",
+    "url": "https://www.ofa.unito.it/mod/mapleta/view.php?id=1838"
+   }
+  ]
+ }
+]

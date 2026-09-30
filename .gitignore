@@ -1,0 +1,7 @@
+tools/node_modules/
+moodle/
+slide/
+slides/
+__pycache__/
+.DS_Store
+Thumbs.db
