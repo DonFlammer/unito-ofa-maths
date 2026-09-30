@@ -13,6 +13,6 @@
   "dependencies": {
     "js-yaml": "^4.3.2",
     "katex": "^0.16.47",
-    "marked": "^15.0.12"
+    "marked": "^18.0.14"
   }
 }
