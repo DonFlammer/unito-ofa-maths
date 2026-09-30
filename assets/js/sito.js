@@ -31,6 +31,31 @@
     if (on) $$('.rivela').forEach(e => e.classList.add('visto'));
   }));
 
+  /* nei moduli lo sfondo sfuma e si spegne, senza cambiare la preferenza salvata per le altre pagine */
+  let dissolvenzaMoto = null;
+  const annullaDissolvenza = () => {
+    if (!dissolvenzaMoto) return;
+    dissolvenzaMoto.onfinish = null;
+    dissolvenzaMoto.cancel();
+    dissolvenzaMoto = null;
+  };
+  document.addEventListener('ofa:moto', () => { annullaDissolvenza(); aggiornaMoto(); });
+  const spegniNelModulo = () => {
+    if (!/^[1-8]$/.test(document.body.dataset.modulo || '')) return;
+    annullaDissolvenza();
+    if (html.classList.contains('meno-moto')) return;
+    const spegni = () => {
+      html.classList.add('meno-moto');
+      document.dispatchEvent(new Event('ofa:moto'));
+    };
+    const sfondo = $('#stelle');
+    if (!sfondo?.animate || document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { spegni(); return; }
+    dissolvenzaMoto = sfondo.animate([{ opacity: getComputedStyle(sfondo).opacity }, { opacity: 0 }], { duration: 600, easing: 'ease-out', fill: 'forwards' });
+    dissolvenzaMoto.onfinish = spegni;
+  };
+  spegniNelModulo();
+  window.addEventListener('pageshow', e => { if (e.persisted) spegniNelModulo(); });
+
   /* ---------- barra in alto ---------- */
   const barra = $('.barra');
   const menuBtn = $('.menu-btn');
