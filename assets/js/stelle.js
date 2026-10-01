@@ -54,29 +54,8 @@
   // animazioni ridotte: solo lo sfondo nero, senza stelle
   function vuoto() { ctx.globalAlpha = 1; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, L, A); }
 
-  // Alone del puntatore, disegnato una volta sola in un'immagine con un leggero rumore (dithering). Il profilo è quello
-  // di sempre (0.07 al centro, in linea retta fino a zero a 240 px) fino a 170 px, poi si spegne del tutto entro 200 px.
-  // La coda tagliata sta sotto il 2% di luminosità: su un OLED con le impostazioni normali si confonde col nero, ma sugli
-  // schermi che schiariscono i neri (luminosità o gamma alzate nel driver della scheda video, molti LCD) diventava visibile
-  // e l'alone sembrava più grande e fatto ad anelli. Così resta dappertutto come su un OLED.
-  const ALONE = 200;
-  let aloneImg = null;
-  function preparaAlone(colore) {
-    const lato = ALONE * 2, c = document.createElement('canvas');
-    c.width = c.height = lato;
-    const g = c.getContext('2d'), img = g.createImageData(lato, lato), d = img.data, [r0, g0, b0] = colore.split(',').map(Number);
-    for (let y = 0; y < lato; y++) for (let x = 0; x < lato; x++) {
-      const r = Math.hypot(x + 0.5 - ALONE, y + 0.5 - ALONE);
-      if (r >= ALONE) continue;
-      const t = Math.max(0, (r - 170) / 30), a = 0.07 * (1 - r / 240) * (1 - t * t * (3 - 2 * t));
-      const i = (y * lato + x) * 4;
-      d[i] = r0; d[i + 1] = g0; d[i + 2] = b0;
-      d[i + 3] = Math.max(0, Math.round(a * 255 + (Math.random() - 0.5) * 2));   // ±1 livello a caso: niente anelli
-    }
-    g.putImageData(img, 0, 0);
-    return c;
-  }
-
+  // Niente alone rosso attorno al puntatore (tolto il 01/10/2026): vicino al puntatore le stelle si scostano,
+  // si accendono e si collegano.
   function disegna(dt, dScroll) {
     ctx.globalAlpha = 1;
     ctx.fillStyle = '#000';
@@ -84,13 +63,6 @@
 
     px += (tx - px) * 0.16; py += (ty - py) * 0.16;
     vicinanza += ((dentro ? 1 : 0) - vicinanza) * 0.06;
-
-    if (vicinanza > 0.01) {                               // leggero alone rosso attorno al puntatore
-      if (!aloneImg) aloneImg = preparaAlone('215, 38, 63');
-      ctx.globalAlpha = vicinanza;
-      ctx.drawImage(aloneImg, px - ALONE, py - ALONE, ALONE * 2, ALONE * 2);
-      ctx.globalAlpha = 1;
-    }
 
     const R = 150, R2 = R * R, vicine = [];
     for (const s of stelle) {
