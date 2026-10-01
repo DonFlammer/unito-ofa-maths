@@ -68,8 +68,11 @@ hr { border: 0; border-top: 1px solid var(--linea); margin: 3rem 0; }
 .occhiello .rosso { color: var(--rosso-testo); }
 
 /* ---------- barra in alto ---------- */
-.barra { position: fixed; inset: 0 0 auto; z-index: 50; height: var(--barra-h); background: rgba(0, 0, 0, .9); border-bottom: 1px solid var(--linea);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: transform .4s var(--morbido); }
+/* nera e opaca invece della sfocatura dello sfondo (backdrop-filter): sotto la barra le stelle cambiano a ogni fotogramma
+   e la sfocatura andrebbe ricalcolata ogni volta; senza sfocatura, con un po' di trasparenza si leggerebbe il testo che
+   passa sotto, mentre prima restava solo un velo indistinto */
+.barra { position: fixed; inset: 0 0 auto; z-index: 50; height: var(--barra-h); background: #000; border-bottom: 1px solid var(--linea);
+  transition: transform .4s var(--morbido); }
 .barra.nascosta { transform: translateY(-100%); }
 .barra-in { height: 100%; display: flex; align-items: center; gap: 1.5rem; }
 .logo { display: inline-flex; align-items: baseline; gap: .65rem; white-space: nowrap; color: var(--bianco); }
@@ -101,6 +104,13 @@ hr { border: 0; border-top: 1px solid var(--linea); margin: 3rem 0; }
 .menu-aperto .menu-btn span:nth-child(2) { opacity: 0; }
 .menu-aperto .menu-btn span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
 .progresso-lettura { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; transform-origin: 0 50%; transform: scaleX(var(--p, 0)); background: var(--rosso); }
+/* dove il browser sa legare un'animazione allo scorrimento, la barra di lettura la muove il compositore: niente lavoro della
+   pagina a ogni fotogramma mentre si scorre (sito.js aggiorna --p solo negli altri browser) */
+@supports (animation-timeline: scroll()) {
+  .progresso-lettura { transform: scaleX(0); animation: lettura linear both; animation-timeline: scroll(root block); }
+  .meno-moto .progresso-lettura { animation-duration: auto !important; }
+  @keyframes lettura { to { transform: scaleX(1); } }
+}
 @media (min-width: 520px) and (max-width: 1100px) { .logo small { display: inline; } }
 @media (max-width: 1100px) {
   .menu-btn { display: block; }
@@ -251,6 +261,32 @@ details[open]::details-content { block-size: auto; }
 
 .pagina-modulo { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; padding-bottom: 1rem; }
 @media (min-width: 1120px) { .pagina-modulo { grid-template-columns: 14.5rem minmax(0, 44rem); justify-content: space-between; } }
+/* Pagine lunghe (appunti dei moduli e formulario: migliaia di formule). I blocchi lontani dallo schermo non si dispongono
+   e non si disegnano finché non si avvicinano (content-visibility): pagina pronta prima e scorrimento fluido. Restano fuori
+   i titoli, di cui sito.js legge la posizione per l'indice, e il contenitore del quiz, troppo alto: lì contano le singole
+   domande. contain-intrinsic-size: altezza stimata di un blocco mai mostrato (dalle medie misurate sulle pagine), poi
+   quella vera (auto). overflow-clip-margin: il contorno del fuoco e ciò che sporge di poco dal blocco non vengono tagliati.
+   La ricerca nella pagina, i link alle àncore e la stampa vedono comunque tutto il testo. */
+.testo.lungo > :where(:not(h2, h3, h4, .quiz)), .testo.lungo .q-lista > .q { content-visibility: auto; contain-intrinsic-size: auto 220px; overflow-clip-margin: 12px; }
+.testo.lungo > p { contain-intrinsic-size: auto 80px; }
+.testo.lungo > ul, .testo.lungo > ol { contain-intrinsic-size: auto 230px; }
+.testo.lungo > .rq { contain-intrinsic-size: auto 240px; }
+.testo.lungo > .grafico { contain-intrinsic-size: auto 560px; }
+.testo.lungo > .retta { contain-intrinsic-size: auto 120px; }
+.testo.lungo > .formula { contain-intrinsic-size: auto 75px; }
+.testo.lungo > .tabella { contain-intrinsic-size: auto 300px; }
+.testo.lungo > .es { contain-intrinsic-size: auto 200px; }
+.testo.lungo .q-lista > .q { contain-intrinsic-size: auto 300px; }
+.testo.lungo > .checklist { contain-intrinsic-size: auto 850px; }
+.testo.lungo > .portale { contain-intrinsic-size: auto 1200px; }
+.testo.lungo > .nav-moduli { contain-intrinsic-size: auto 70px; }
+/* il contenimento tiene dentro al blocco i margini del primo e dell'ultimo elemento interno, che senza blocchi si fondevano
+   con quelli dei vicini: qui si riportano fuori, così gli spazi tra i blocchi restano identici al pixel */
+.testo.lungo > ul > li:first-child, .testo.lungo > ol > li:first-child { margin-top: 0; }
+.testo.lungo > ul > li:last-child, .testo.lungo > ol > li:last-child { margin-bottom: 0; }
+.testo.lungo > .portale { margin-top: 3.6rem; }
+.testo.lungo > .portale > :first-child { margin-top: 0; }
+.testo.lungo > .portale > :last-child { margin-bottom: 0; }
 .indice { position: sticky; top: calc(var(--barra-h) + 1.5rem); align-self: start; max-height: calc(100vh - var(--barra-h) - 3rem); overflow-y: auto; scrollbar-width: none; font-family: var(--sans); }
 .indice::-webkit-scrollbar { display: none; }
 .indice-titolo { font: 600 .72rem/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--testo-3); margin: 0 0 .9rem; }
@@ -556,6 +592,7 @@ html.arrivo:not(.pronto) .rivela { opacity: 1; transform: none; transition: none
 html.meno-moto::view-transition-group(*), html.meno-moto::view-transition-old(*), html.meno-moto::view-transition-new(*) { animation: none; }
 
 @media print {
+  .testo.lungo > *, .testo.lungo .q-lista > .q { content-visibility: visible; }
   #stelle, .barra, .piede, .indice, .q-azioni, .sim-barra, .nav-moduli { display: none !important; }
   body { background: #fff; color: #000; }
   main, .piede { will-change: auto; }
