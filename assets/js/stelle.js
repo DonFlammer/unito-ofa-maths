@@ -1,5 +1,6 @@
-// Polvere di stelle sullo sfondo: deriva lenta, scintillio, le stelle si scostano dal mouse e vicino al puntatore
-// si accendono e si collegano; un clic manda un'onda leggera. Dietro le colonne di testo le stelle si attenuano.
+// Polvere di stelle sullo sfondo: deriva lenta, scintillio, un alone rosso attorno al puntatore, le stelle si scostano
+// dal mouse e vicino al puntatore si accendono e si collegano; un clic manda un'onda leggera. Dietro le colonne di testo
+// le stelle si attenuano.
 // Cambiando pagina il cielo (stelle, onde, puntatore) passa alla pagina nuova attraverso la sessionStorage della scheda:
 // continua da dove era invece di ripartire da capo.
 // Si ferma con l'interruttore «Animazioni ridotte» del sito (classe meno-moto su <html>), con la scheda nascosta e con la
@@ -10,8 +11,11 @@
 // quanti fotogrammi si disegnano al secondo, non quanto è grande il disegno. Per questo il cielo non segue lo schermo
 // (60, 120 o 144 volte al secondo) ma va a ritmi suoi:
 // - a riposo, quando ci sono solo la deriva (pochi pixel al secondo) e lo scintillio, RITMO_CALMO volte al secondo;
-// - mentre il puntatore si muove, durante un'onda e finché le stelle scostate non tornano ferme, RITMO_VIVO;
-// - mentre la pagina scorre, a ogni fotogramma (al massimo 60 al secondo), insieme al testo.
+// - mentre il puntatore si muove, durante un'onda e finché le stelle scostate non tornano ferme, RITMO_VIVO.
+// Il cielo non si sposta con lo scorrimento della pagina (dal 01/10/2026; prima le stelle scorrevano un poco, le più
+// vicine di più). La pagina scorre nel compositore a ogni aggiornamento dello schermo, il cielo si disegnava al massimo
+// 60 volte al secondo: sugli schermi a 120 o 144 Hz le stelle in movimento sembravano sdoppiarsi. Fermo, mentre la
+// pagina scorre non ha bisogno di nulla.
 // La spinta del puntatore, la molla che riporta le stelle al loro posto e le onde avanzano a passi fissi di 1/60 di
 // secondo: il movimento è identico a ogni ritmo e su ogni schermo. Il canvas ha la risoluzione dei pixel CSS
 // (devicePixelRatio 1): su uno schermo ad alta densità ingrandirlo costa poco e le stelle, puntini sfumati, restano uguali.
@@ -34,10 +38,8 @@
   let L = 0, A = 0, stelle = [], onde = [], fasce = [], fasceVere = false;
   let px = -1e4, py = -1e4, tx = -1e4, ty = -1e4, dentro = false, vicinanza = 0, tipo = '';
   let salvatoAlle = 0, tornata = false;
-  // tempo: ultimo disegno, avanzo della fisica a passi fissi, ultimo movimento del puntatore e della pagina
-  let prima = 0, resto = 0, mossoAlle = -1e9, scorreAlle = -1e9, attivo = false;
-  // scorrimento: posizione già vista e spostamento non ancora applicato alle stelle (letto solo negli eventi di scorrimento)
-  let ultimoScroll = 0, scorso = 0, scrollNoto = false;
+  // tempo: ultimo disegno, avanzo della fisica a passi fissi, ultimo movimento del puntatore
+  let prima = 0, resto = 0, mossoAlle = -1e9, attivo = false;
   // prossimo fotogramma: timer o richiesta di fotogramma in attesa, e quando è previsto
   let timer = 0, richiesta = 0, previsto = 0;
   const vicine = new Float64Array(45);                 // stelle accese attorno al puntatore: x, y, luce (al massimo 15)
@@ -77,9 +79,9 @@
   function vuoto() { ctx.globalAlpha = 1; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, L, A); }
 
   // deriva e scintillio: dipendono solo dal tempo, si calcolano in un colpo per tutto l'intervallo
-  function deriva(dt, dScroll) {
+  function deriva(dt) {
     for (const s of stelle) {
-      s.x += s.vx * dt; s.y += s.vy * dt - dScroll * (0.06 + s.z * 0.26);
+      s.x += s.vx * dt; s.y += s.vy * dt;
       if (s.x < -10) s.x += L + 20; else if (s.x > L + 10) s.x -= L + 20;
       if (s.y < -10) s.y += A + 20; else if (s.y > A + 10) s.y -= A + 20;
       s.fase += s.vel * dt * 0.001;
@@ -120,12 +122,74 @@
     }
   }
 
-  // Niente alone rosso attorno al puntatore (tolto il 01/10/2026): vicino al puntatore le stelle si scostano,
-  // si accendono e si collegano.
+  /* ---------- alone del puntatore ---------- */
+  // L'alone rosso di prima: 0.07 di opacità al centro, in linea retta fino a zero a 240 px, spento del tutto tra 170 e
+  // 200 px; segue il puntatore con un leggero ritardo (px, py) e compare e sparisce piano (vicinanza). Perché si veda
+  // uguale su OLED, IPS, HDR e con la luminosità alta:
+  // - rumore senza scarto (dithering) contro gli anelli: ogni pixel prende il livello intero sotto o sopra il valore vero,
+  //   con la probabilità giusta, e dove il valore è zero resta zero. Il rumore di prima (±1 livello a caso) accendeva
+  //   anche un pixel su quattro di quelli che dovevano essere neri, fino al bordo dei 200 px: un disco grande con l'orlo
+  //   netto, invisibile su un OLED e ben visibile sugli schermi che schiariscono i neri. Il rumore si applica al livello
+  //   che si vedrà, poi si sceglie l'opacità che dà proprio quel livello: arrotondando i colori il browser darebbe lo
+  //   stesso livello a due opacità vicine, e il passaggio fra l'una e l'altra resterebbe piatto, a bande;
+  // - la coda più tenue, sotto i 3 livelli su 255, che su molti OLED non si vede, sfuma fino a zero in 30 px: sugli schermi
+  //   che schiariscono i quasi neri (curva sRGB, HDR, luminosità alta) allargava l'alone. La sfumatura va sulla distanza,
+  //   non sul livello: anche dove l'alone scende ripido il bordo resta morbido;
+  // - con Windows in HDR il browser trasforma i colori con la curva sRGB, che schiarisce molto i quasi neri rispetto alla
+  //   gamma 2.2 di uno schermo normale (3/255 escono circa 15 volte più luminosi): in HDR i livelli si riscrivono perché
+  //   la luce emessa sia quella di uno schermo normale.
+  // L'immagine si prepara una volta, appena finito il primo fotogramma in cui serve (qualche millesimo di secondo: il primo
+  // fotogramma di una pagina non deve aspettarla), e si copia a pixel interi, senza ricampionarla.
+  const ALONE = 200, ROSSO = [215, 38, 63];
+  const hdr = window.matchMedia ? window.matchMedia('(dynamic-range: high)') : null;
+  const dopo = window.requestIdleCallback ? f => requestIdleCallback(f, { timeout: 150 }) : f => setTimeout(f, 30);
+  let alone = null, aloneInAttesa = false;
+  function preparaAlone() {
+    const luce22 = v => Math.pow(v / 255, 2.2);
+    const livelloSrgb = y => 255 * (y <= 0.0031308 ? 12.92 * y : 1.055 * Math.pow(y, 1 / 2.4) - 0.055);
+    const inHdr = !!(hdr && hdr.matches), picco = Math.max(...ROSSO);   // sul nero si vede il canale più acceso
+    const liscio = t => (t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t));
+    const prima = r => (r >= ALONE ? 0 : 0.07 * picco * (1 - r / 240) * (1 - liscio((r - 170) / 30)));   // livello su uno schermo normale
+    let r3 = 0;                                                         // dove scende sotto i 3 livelli
+    while (r3 < ALONE && prima(r3) >= 3) r3 += 0.25;
+    // raggio dell'immagine (oltre, tutto spento) e livello da mostrare per distanza al quadrato
+    const m = Math.ceil(Math.min(ALONE, r3 + 15)), m2 = m * m, lato = 2 * m + 1, quadro = new Float32Array(m2 + 1);
+    for (let q = 0; q <= m2; q++) {
+      const r = Math.sqrt(q), w = prima(r) * (1 - liscio((r - r3 + 15) / 30));
+      quadro[q] = w > 0 ? (inHdr ? livelloSrgb(luce22(w)) : w) : 0;
+    }
+    const tela = document.createElement('canvas');
+    tela.width = tela.height = lato;
+    const g = tela.getContext('2d'), img = g.createImageData(lato, lato), d = img.data, opacita = 255 / picco;
+    for (let dy = -m; dy <= m; dy++) {
+      const w = Math.floor(Math.sqrt(m2 - dy * dy)), ay = 0.00583715 * (dy + 4096);
+      for (let dx = -w, i = ((dy + m) * lato + m - w) * 4; dx <= w; dx++, i += 4) {
+        const v = quadro[dx * dx + dy * dy];
+        if (!v) continue;
+        // soglia del rumore: rumore a gradiente intercalato, fisso attorno al centro e ben sparso (niente grumi)
+        const a = 0.06711056 * (dx + 4096) + ay, b = 52.9829189 * (a - Math.floor(a));
+        const liv = Math.floor(v + b - Math.floor(b));
+        if (!liv) continue;
+        d[i] = ROSSO[0]; d[i + 1] = ROSSO[1]; d[i + 2] = ROSSO[2]; d[i + 3] = Math.min(255, Math.round(liv * opacita));
+      }
+    }
+    g.putImageData(img, 0, 0);
+    return tela;
+  }
+
   function disegna() {
     ctx.globalAlpha = 1;
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, L, A);
+    if (vicinanza > 0.01 && alone) {
+      const m = (alone.width - 1) / 2;
+      ctx.globalAlpha = vicinanza > 0.99 ? 1 : vicinanza;   // a piena intensità l'immagine si copia com'è
+      ctx.drawImage(alone, Math.round(px) - m, Math.round(py) - m);
+      ctx.globalAlpha = 1;
+    } else if (vicinanza > 0.01 && !aloneInAttesa) {
+      aloneInAttesa = true;
+      dopo(() => { aloneInAttesa = false; if (!alone) alone = preparaAlone(); sveglia(0); });
+    }
     ctx.fillStyle = '#fbfaf6';
     const spinge = vicinanza > 0.05;
     let nv = 0, veloci = false;
@@ -193,16 +257,14 @@
   function fotogramma(ora) {
     richiesta = 0;
     if (inPausa()) { if (fermo()) vuoto(); return; }
-    const scorre = ora - scorreAlle < 120;
-    if (scorre && ora - prima < 15) { pianifica(prima + 16); return; }   // schermi oltre i 60 Hz: uno sì e uno no
     const dt = Math.max(0, Math.min(250, ora - prima)); prima = ora;
-    deriva(dt, scorso); scorso = 0;
+    deriva(dt);
     resto += dt;
     const passi = Math.min(8, Math.floor(resto / PASSO));
     resto = passi === 8 ? 0 : resto - passi * PASSO;
     for (let k = 0; k < passi; k++) passo();
     disegna();
-    pianifica(scorre ? ora + 16 : ora + 1000 / (attivo || ora - mossoAlle < 200 ? RITMO_VIVO : RITMO_CALMO));
+    pianifica(ora + 1000 / (attivo || ora - mossoAlle < 200 ? RITMO_VIVO : RITMO_CALMO));
   }
   // disegna subito lo stato attuale e riparte (dopo una pausa riprende da dove era, senza salti)
   function avvia() {
@@ -216,7 +278,7 @@
     // attesa fa anche mostrare prima la pagina nuova mentre si carica (misurato: circa 60 ms dal clic invece di 230)
     pianifica(prima);
   }
-  // qualcosa è cambiato (puntatore, clic, scorrimento): il prossimo fotogramma entro «ms»
+  // qualcosa è cambiato (puntatore, clic): il prossimo fotogramma entro «ms»
   function sveglia(ms) {
     if (!richiesta && !timer && inPausa()) return;   // in pausa: ci pensa avvia() alla ripresa
     pianifica(Math.max(prima + ms, performance.now()));
@@ -269,7 +331,7 @@
     }
     // avanti di quanto è durato il cambio di pagina (al massimo un secondo): la deriva continua senza salti
     const el = Math.min(1000, eta);
-    deriva(el, 0);
+    deriva(el);
     for (const o of onde) { o.r += el * 0.5; o.forza *= Math.pow(0.9955, el); }
     return true;
   }
@@ -287,38 +349,17 @@
   // finestra in secondo piano: il cielo si ferma; torna attiva: riparte da dove era
   window.addEventListener('blur', () => { dentro = false; annulla(); });
   window.addEventListener('focus', avvia);
-  // le stelle si spostano un poco con lo scorrimento della pagina (parallasse): la posizione si legge solo qui, quando
-  // cambia davvero; come prima, al massimo 60 px per volta (un salto con un'àncora o con Fine non le sposta)
-  // Nelle pagine lunghe i blocchi sopra lo schermo si dispongono solo quando ci si avvicinano e il browser corregge lo
-  // scorrimento per tenere fermo il testo: quella correzione, contraria al verso voluto da chi legge (rotella, tasti,
-  // dito), non sposta le stelle.
-  let verso = 0, versoAlle = -1e4, ditoY = null;
-  const voluto = v => { verso = v; versoAlle = performance.now(); };
-  window.addEventListener('wheel', e => { if (e.deltaY) voluto(Math.sign(e.deltaY)); }, { passive: true });
-  window.addEventListener('keydown', e => {
-    if (/^(ArrowDown|PageDown|End)$/.test(e.key) || (e.key === ' ' && !e.shiftKey)) voluto(1);
-    else if (/^(ArrowUp|PageUp|Home)$/.test(e.key) || (e.key === ' ' && e.shiftKey)) voluto(-1);
-  }, { passive: true });
-  window.addEventListener('touchstart', e => { ditoY = e.touches[0]?.clientY ?? null; }, { passive: true });
-  window.addEventListener('touchmove', e => { const y = e.touches[0]?.clientY; if (y == null) return; if (ditoY != null && y !== ditoY) voluto(y < ditoY ? 1 : -1); ditoY = y; }, { passive: true });
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY, d = Math.max(-60, Math.min(60, y - ultimoScroll));
-    if (scrollNoto && !(d && performance.now() - versoAlle < 400 && Math.sign(d) !== verso)) scorso += d;
-    ultimoScroll = y; scrollNoto = true;
-    scorreAlle = performance.now(); sveglia(0);
-  }, { passive: true });
   let attesaMisura = 0;
   window.addEventListener('resize', () => { clearTimeout(attesaMisura); attesaMisura = setTimeout(() => { dimensiona(); misuraFasce(); avvia(); }, 120); });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', misuraFasce, { once: true }); else misuraFasce();
   document.addEventListener('visibilitychange', avvia);
   document.addEventListener('ofa:moto', avvia);
+  if (hdr && hdr.addEventListener) hdr.addEventListener('change', () => { alone = null; avvia(); });   // HDR acceso o spento
   window.addEventListener('pagehide', salvaStato);
   // con Indietro/Avanti la pagina torna dalla cache del browser: lo stato della pagina appena lasciata diventa leggibile
   // solo al primo fotogramma, quindi si riprende a «pagereveal» (se il browser non lo conosce, subito)
-  window.addEventListener('pageshow', e => { if (!e.persisted) return; scrollNoto = false; if ('onpagereveal' in window) tornata = true; else if (riprendi(salvatoAlle)) avvia(); });
-  // un link con àncora fa scorrere la pagina nuova mentre si apre: quello scorrimento non deve spostare le stelle
-  // (la posizione di partenza si prende al primo evento di scorrimento, senza chiederla alla pagina mentre si carica)
-  window.addEventListener('pagereveal', () => { scrollNoto = false; if (tornata) { tornata = false; if (riprendi(salvatoAlle)) avvia(); } });
+  window.addEventListener('pageshow', e => { if (!e.persisted) return; if ('onpagereveal' in window) tornata = true; else if (riprendi(salvatoAlle)) avvia(); });
+  window.addEventListener('pagereveal', () => { if (tornata) { tornata = false; if (riprendi(salvatoAlle)) avvia(); } });
   dimensiona();
   riprendi();
   avvia();
