@@ -8,11 +8,26 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { compila, esc } from './ofamd.mjs';
 
-// script in linea nella <head> (animazioni ridotte prima del primo disegno) e politica di sicurezza dei contenuti (CSP):
-// GitHub Pages non permette intestazioni HTTP, quindi va in un <meta>. Solo gli script del sito più questo (con la sua
-// impronta SHA-256), niente gestori in linea (onclick, onerror…), niente risorse esterne
-const SCRIPT_MOTO = `try { if (localStorage.getItem('ofa:moto') === '"ridotto"') document.documentElement.classList.add('meno-moto'); } catch (e) {}`;
-const CSP = `default-src 'none'; script-src 'self' 'sha256-${createHash('sha256').update(SCRIPT_MOTO).digest('base64')}'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'`;
+// script in linea in fondo alla <head>, dopo i fogli di stile:
+// - animazioni ridotte scelte prima: la classe meno-moto c'è già al primo disegno;
+// - calcolo degli stili appena caricati. Serve alla dissolvenza tra le pagine: Chrome decide se farla (regola
+//   @view-transition di sito.css) al primo fotogramma con gli stili calcolati fino a quel momento, e se il primo
+//   fotogramma arriva prima di qualunque calcolo, come quando la pagina è già tutta scaricata (precaricata o dalla
+//   cache), la dissolvenza salta. Misurato il 01/10/2026: senza questa lettura saltava in 3 cambi di pagina su 8.
+// Politica di sicurezza dei contenuti (CSP): GitHub Pages non permette intestazioni HTTP, quindi va in un <meta>. Solo
+// gli script del sito più quelli in linea qui sotto (con la loro impronta SHA-256), niente gestori in linea (onclick,
+// onerror…), niente risorse esterne
+const SCRIPT_MOTO = `try { if (localStorage.getItem('ofa:moto') === '"ridotto"') document.documentElement.classList.add('meno-moto'); } catch (e) {} getComputedStyle(document.documentElement).opacity;`;
+// precaricamento delle pagine del sito (regole di speculazione): se il puntatore resta un attimo su un link, o lo si
+// preme, il browser scarica già la pagina e il clic la apre senza aspettare la rete. Solo pagine .html della stessa
+// origine; anche queste regole sono in linea, quindi la loro impronta sta nella CSP
+const REGOLE_PRECARICO = '{"prefetch":[{"where":{"href_matches":"/*.html"},"eagerness":"moderate"}]}';
+// Primo fotogramma di ogni pagina: il browser non disegna niente finché non ha letto il link «Skip to content», che
+// viene subito dopo stelle.js (link rel=expect, blocking=render). Così nel primo fotogramma ci sono già le stelle al
+// loro posto, e con loro la barra, invece di un fotogramma nero mentre stelle.js arriva; stelle.js si chiede già nella
+// <head> (preload), insieme ai fogli di stile, perché quell'attesa sia la più breve possibile.
+const impronta = s => `'sha256-${createHash('sha256').update(s).digest('base64')}'`;
+const CSP = `default-src 'none'; script-src 'self' ${impronta(SCRIPT_MOTO)} ${impronta(REGOLE_PRECARICO)}; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'`;
 // indirizzi esterni (costanti e portale): solo https, sempre con escape
 const httpsSicuro = url => { if (!/^https:\/\/[^\s"'<>]+$/.test(url)) throw new Error(`indirizzo esterno non valido (serve https): ${url}`); return esc(url); };
 
@@ -153,19 +168,22 @@ function page({ path, title, description, body, active = '', reading = false, ka
 <meta name="description" content="${esc(description)}">
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
-<script>${SCRIPT_MOTO}</script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <link rel="alternate" hreflang="it" href="${itUrl}">
 <link rel="icon" href="${ICON}">
 <link rel="preload" href="${r}assets/fonts/source-serif-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${r}assets/js/stelle.js" as="script">
 <link rel="stylesheet" href="${r}assets/css/sito.css">
-${katex ? `<link rel="stylesheet" href="${r}assets/katex/katex.min.css">\n` : ''}</head>
+<link rel="expect" href="#salta-al-contenuto" blocking="render">
+<script type="speculationrules">${REGOLE_PRECARICO}</script>
+${katex ? `<link rel="stylesheet" href="${r}assets/katex/katex.min.css">\n` : ''}<script>${SCRIPT_MOTO}</script>
+</head>
 <body data-radice="${r}"${attr}>
 <canvas id="stelle" aria-hidden="true"></canvas>
 <script src="${r}assets/js/stelle.js"></script>
-<a class="salta" href="#contenuto">Skip to content</a>
+<a class="salta" id="salta-al-contenuto" href="#contenuto">Skip to content</a>
 ${bar(r, active, reading, itUrl)}
 <main id="contenuto">
 ${body}
@@ -215,7 +233,7 @@ ${next ? `<a class="succ" href="${next.base}.html"><span class="dir">Module ${ne
     crumbs: `<a href="../index.html">Maths OFA</a>${sep}<a href="../index.html#programme">Notes</a>${sep}<span>Module ${m.n}</span>`,
     eyebrow: `<span class="rosso">Module ${m.n}</span> · units ${unitCodes(m).join(', ')}`,
     title: esc(m.title), sub: esc(m.meta.breve), extra,
-  }) + `<div class="contenitore pagina-modulo">${contents(m.toc, p ? [{ livello: 2, id: 'on-the-ofa-platform', html: 'On the OFA platform' }, ...(errata[m.n] ? [{ livello: 3, id: 'known-errata', html: 'Known errata' }] : [])] : [])}<article class="testo">${m.html}${portalHtml}${nav}</article></div>`;
+  }) + `<div class="contenitore pagina-modulo">${contents(m.toc, p ? [{ livello: 2, id: 'on-the-ofa-platform', html: 'On the OFA platform' }, ...(errata[m.n] ? [{ livello: 3, id: 'known-errata', html: 'Known errata' }] : [])] : [])}<article class="testo lungo">${m.html}${portalHtml}${nav}</article></div>`;
   page({ path: m.url, title: `Module ${m.n}. ${m.title} — Maths OFA`, description: `Notes for the maths OFA of Computer Science at UniTo, module ${m.n}: ${m.meta.breve}`, body, active: 'notes', reading: true, data: { modulo: m.n } });
 }
 
@@ -241,7 +259,7 @@ ${next ? `<a class="succ" href="${next.base}.html"><span class="dir">Module ${ne
     crumbs: `<a href="index.html">Maths OFA</a>${sep}<span>Formula sheet</span>`,
     title: 'Formula sheet',
     sub: 'The definitions and rules of the eight modules, in the order of the notes, for revision. Each entry links to the point where it is explained with examples.',
-  }) + `<div class="contenitore pagina-modulo">${contents(toc)}<article class="testo">${blocks.join('') || '<p>The formula sheet fills up as the module notes are ready.</p>'}</article></div>`;
+  }) + `<div class="contenitore pagina-modulo">${contents(toc)}<article class="testo lungo">${blocks.join('') || '<p>The formula sheet fills up as the module notes are ready.</p>'}</article></div>`;
   page({ path: 'formulas.html', title: 'Formula sheet — Maths OFA', description: 'Definitions and rules of all eight modules of the maths OFA course, on one page.', body, active: 'formulas', reading: true });
 }
 

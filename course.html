@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-C3IxI/4e5VjLOHQ3lp8PJGTSBoLEV5UYJXKdcK+pZ20='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-EYqOWDsgPmBxVPVSN4iRlwfZbHAX+RhEPYL7W8yZY/k=' 'sha256-W//Aggx3Jxam2E2hIhhH/iM187Ep9LJu+llc/JcYPlg='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script src="assets/js/memoria.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -10,20 +10,23 @@
 <meta name="description" content="How the “OFA Matematica” course on UniTo's OFA platform is organised: modules, units, activities, notation and verified errata of the material.">
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
-<script>try { if (localStorage.getItem('ofa:moto') === '"ridotto"') document.documentElement.classList.add('meno-moto'); } catch (e) {}</script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="The “OFA Matematica” course — Maths OFA">
 <meta property="og:description" content="How the “OFA Matematica” course on UniTo's OFA platform is organised: modules, units, activities, notation and verified errata of the material.">
 <link rel="alternate" hreflang="it" href="https://donflammer.github.io/unito-ofa-matematica/corso.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2210%22%20fill%3D%22%23000%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%2210%22%20height%3D%2210%22%20fill%3D%22%23d7263f%22%2F%3E%3Cpath%20d%3D%22M14%2050h36M14%2039h36%22%20stroke%3D%22%23e8e5de%22%20stroke-width%3D%224%22%2F%3E%3C%2Fsvg%3E">
 <link rel="preload" href="assets/fonts/source-serif-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/js/stelle.js" as="script">
 <link rel="stylesheet" href="assets/css/sito.css">
+<link rel="expect" href="#salta-al-contenuto" blocking="render">
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*.html"},"eagerness":"moderate"}]}</script>
 <link rel="stylesheet" href="assets/katex/katex.min.css">
+<script>try { if (localStorage.getItem('ofa:moto') === '"ridotto"') document.documentElement.classList.add('meno-moto'); } catch (e) {} getComputedStyle(document.documentElement).opacity;</script>
 </head>
 <body data-radice="">
 <canvas id="stelle" aria-hidden="true"></canvas>
 <script src="assets/js/stelle.js"></script>
-<a class="salta" href="#contenuto">Skip to content</a>
+<a class="salta" id="salta-al-contenuto" href="#contenuto">Skip to content</a>
 <header class="barra"><div class="contenitore barra-in">
 <a class="logo" href="index.html"><span class="logo-segno" aria-hidden="true"></span><span class="logo-nome">Maths OFA</span><small>unofficial guide · Computer Science UniTo</small></a>
 <button class="menu-btn" type="button" aria-label="Open the menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>

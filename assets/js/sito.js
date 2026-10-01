@@ -66,14 +66,28 @@
     });
     $$('.menu a').forEach(a => a.addEventListener('click', () => { document.body.classList.remove('menu-aperto'); menuBtn.setAttribute('aria-expanded', 'false'); }));
   }
-  const barraLettura = $('.progresso-lettura');
+  // barra di lettura: se il browser lega le animazioni allo scorrimento la muove il CSS (sito.css), qui niente
+  const barraLettura = window.CSS?.supports?.('animation-timeline: scroll()') ? null : $('.progresso-lettura');
   let ultimoY = window.scrollY, attesa = false;
+  // verso voluto da chi legge (rotella, tasti, dito). Nelle pagine lunghe i blocchi sopra lo schermo si dispongono solo
+  // quando ci si avvicinano e il browser corregge lo scorrimento per tenere fermo il testo (scroll anchoring): quella
+  // correzione va in senso contrario a chi sta risalendo e non deve nascondere la barra
+  let verso = 0, versoAlle = -1e4, ditoY = null;
+  const voluto = v => { verso = v; versoAlle = performance.now(); };
+  window.addEventListener('wheel', e => { if (e.deltaY) voluto(Math.sign(e.deltaY)); }, { passive: true });
+  window.addEventListener('keydown', e => {
+    if (/^(ArrowDown|PageDown|End)$/.test(e.key) || (e.key === ' ' && !e.shiftKey)) voluto(1);
+    else if (/^(ArrowUp|PageUp|Home)$/.test(e.key) || (e.key === ' ' && e.shiftKey)) voluto(-1);
+  }, { passive: true });
+  window.addEventListener('touchstart', e => { ditoY = e.touches[0]?.clientY ?? null; }, { passive: true });
+  window.addEventListener('touchmove', e => { const y = e.touches[0]?.clientY; if (y == null) return; if (ditoY != null && y !== ditoY) voluto(y < ditoY ? 1 : -1); ditoY = y; }, { passive: true });
   const suScroll = () => {
     attesa = false;
     const y = window.scrollY;
     if (barra) {
       barra.classList.toggle('scorsa', y > 8);
-      if (!document.body.classList.contains('menu-aperto')) barra.classList.toggle('nascosta', y > ultimoY && y > 280);
+      const giu = y > ultimoY, contrario = performance.now() - versoAlle < 400 && verso !== (giu ? 1 : -1);
+      if (!document.body.classList.contains('menu-aperto') && !contrario) barra.classList.toggle('nascosta', giu && y > 280);
     }
     if (barraLettura) {
       const h = document.documentElement.scrollHeight - window.innerHeight;
@@ -116,6 +130,40 @@
     window.addEventListener('scroll', () => requestAnimationFrame(aggiorna), { passive: true });
     linkIndice.forEach(a => a.addEventListener('click', () => { const d = a.closest('details'); if (d && window.innerWidth < 1120) d.open = false; }));
   }
+
+  /* àncore nella pagina (indice, rimandi): nelle pagine lunghe i blocchi lontani hanno ancora un'altezza stimata
+     (content-visibility) e prendono quella vera mentre lo scorrimento morbido li attraversa, quindi l'arrivo può cadere più
+     su o più giù del titolo. A scorrimento finito, se il titolo non è al suo posto, un secondo scorrimento breve ce lo porta
+     (al massimo tre volte); si smette appena chi legge usa la rotella, lo schermo, il mouse o la tastiera */
+  const allineaAncora = bersaglio => {
+    let attesa = 0, giri = 0;
+    const scadenza = performance.now() + 8000, interventi = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+    const smetti = () => {
+      clearTimeout(attesa);
+      window.removeEventListener('scroll', suScroll);
+      interventi.forEach(t => window.removeEventListener(t, smetti, true));
+    };
+    const controlla = () => {
+      const posto = (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0) + (parseFloat(getComputedStyle(bersaglio).scrollMarginTop) || 0);
+      const scarto = bersaglio.getBoundingClientRect().top - posto;
+      const inFondo = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 1;
+      if (Math.abs(scarto) <= 2 || (scarto > 0 && inFondo) || ++giri > 3 || performance.now() > scadenza) { smetti(); return; }
+      bersaglio.scrollIntoView({ block: 'start' });   // morbido o istantaneo come dice il CSS (animazioni ridotte: istantaneo)
+      attesa = setTimeout(controlla, 400);            // se non c'è più niente da scorrere non arriva nessun evento
+    };
+    const suScroll = () => { clearTimeout(attesa); attesa = setTimeout(controlla, 150); };
+    window.addEventListener('scroll', suScroll, { passive: true });
+    interventi.forEach(t => window.addEventListener(t, smetti, { capture: true, passive: true }));
+    attesa = setTimeout(controlla, 400);
+  };
+  if ($('.testo.lungo')) document.addEventListener('click', e => {
+    const a = e.target instanceof Element ? e.target.closest('a[href^="#"]') : null;
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    let id = '';
+    try { id = decodeURIComponent(a.getAttribute('href').slice(1)); } catch (x) { return; }
+    const bersaglio = id && document.getElementById(id);
+    if (bersaglio) allineaAncora(bersaglio);
+  });
 
   /* ---------- correzione delle risposte ---------- */
   const numeroDa = s => {
